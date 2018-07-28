@@ -1,5 +1,5 @@
 #!/bin/sh
-BACKUP_DIR=./backup
+BACKUP_DIR=../backup
 
 OS_Version=$(sw_vers -productVersion)
 LAST_VERSION=10.13
