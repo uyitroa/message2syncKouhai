@@ -1,8 +1,8 @@
 #include <iostream>
 #include <fstream>
 #include <unistd.h>
-const std::string FILE_NAME = "backup/+33762226688/iMessage\\;-\\;+33762226688.txt";
-constexpr int WAIT = 5;
+const std::string FILE_NAME = "../res/data/line.txt";
+const int WAIT = 5;
 std::string readFile(std::string file_name) {
 	std::string result = "";
 	std::ifstream file;
@@ -17,24 +17,24 @@ std::string readFile(std::string file_name) {
 	return result;
 }
 
+//check for new message
 std::string update() {
 	system("./baskup.sh");
-	std::string command_copy = "cp " + FILE_NAME + " idk.txt";
-	system(&command_copy[0u]);
-	std::string my_string = readFile("idk.txt");
+	std::string my_string = readFile(FILE_NAME);
 	return my_string;
 }
 
-void execute(std::string command) {
+/*void execute(std::string command) {
 
-}
+}*/
 
 int main() {
-	std::string current_string = "";
+	std::string current_string = update();
 	while(true) {
 		std::string new_string = update();
 		if(!(new_string == current_string)) {
-			execute(new_string);
+			std::cout << new_string << "\n";
+			//execute(new_string);
 			current_string = new_string;
 		}
 		sleep(WAIT);
