@@ -7,7 +7,7 @@
 #include "../commands/Bash.h"
 
 const std::string FILE_NAME = "../res/data/line.txt";
-const int WAIT = 5;
+const int WAIT = 3;
 std::string readFile(std::string file_name) {
 	std::string result = "";
 	std::ifstream file;
