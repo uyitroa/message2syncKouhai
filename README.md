@@ -44,7 +44,7 @@ Bash::~Bash() {
 }
 
 void Bash::run(std::string &my_string) {
-	// remove bash from the string to execute bash command
+	// remove "bash" from the string to execute shell command
 	my_string = my_string.substr(5, my_string.size());
 
 	system(my_string.c_str()); // run shell script
