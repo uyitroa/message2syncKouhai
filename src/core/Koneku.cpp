@@ -72,7 +72,7 @@ void Koneku::launch() {
 	std::vector<ACommand*> command = {new Bash};
 	Dora dora(command);
 
-	while(true) {
+	while(current_string != "exit()") {
 		std::string new_string = this->update();
 
 		if(!(new_string == current_string)) {
