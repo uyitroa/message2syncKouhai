@@ -13,12 +13,16 @@
 #include "../manager/Dora.h"
 #include "../commands/Bash.h"
 
-Koneku::Koneku(std::string file_name = "../res/data/line.txt", int wait = 3) {
+Koneku::Koneku(std::string file_name, int wait) {
 	this->file_name = file_name;
 	this->wait  = wait;
 
 }
 
+Koneku::Koneku() {
+	 this->file_name = "../res/data/line.txt";
+	 this->wait = 3;
+}
 Koneku::~Koneku() {
 	// TODO Auto-generated destructor stub
 }
@@ -39,7 +43,7 @@ std::string Koneku::readFile(std::string file_name) {
 
 std::string Koneku::update() {
 	system("app/baskup.sh");
-	std::string my_string = readFile(this->file_name);
+	std::string my_string = this->readFile(this->file_name);
 	return my_string;
 }
 
@@ -52,19 +56,26 @@ bool Koneku::filterMsg(std::string& my_string) {
 	}
 }
 
+void Koneku::del(std::vector<ACommand*> &command) {
+	for(int x = 0; x < command.size(); x++)
+		delete command[x];
+}
+
 void Koneku::launch() {
-	std::string current_string = update();
+	std::string current_string = this->update();
 	std::vector<ACommand*> command = {new Bash};
 	Dora dora(command);
 
 	while(true) {
-		std::string new_string = update();
+		std::string new_string = this->update();
 		if(!(new_string == current_string)) {
 			current_string = new_string;
 			std::cout << new_string << "\n";
-			if(filterMsg(new_string))
+			if(this->filterMsg(new_string))
 				dora.runCommand(new_string);
 		}
 		sleep(this->wait);
 	}
+
+	this->del(command);
 }

@@ -9,6 +9,8 @@
 #define SRC_APP_KONEKU_H_
 
 #include <iostream>
+#include "../abstracts/ACommand.h"
+
 class Koneku {
 private:
 	std::string file_name;
@@ -16,7 +18,9 @@ private:
 
 	std::string readFile(std::string file_name);
 public:
-	Koneku(std::string file_name  = "../res/data/line.txt", int wait = 3);
+	Koneku(std::string name, int time_wait);
+	Koneku();
+
 	~Koneku();
 
 	std::string update();
@@ -26,6 +30,8 @@ public:
 	bool filterMsg(std::string &my_string);
 
 	void launch();
+
+	void del(std::vector<ACommand*> &command);
 };
 
 #endif /* SRC_APP_KONEKU_H_ */
