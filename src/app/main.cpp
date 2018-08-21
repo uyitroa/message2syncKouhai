@@ -34,7 +34,6 @@ so we need to remove the '1|' and the last '|'*/
 bool filterMsg(std::string &my_string) {
 	if(my_string.substr(0, 2) == "1|") {
 		my_string = my_string.substr(2, my_string.size() - 4);
-		std::cout << my_string << "\n";
 		return true;
 	} else {
 		return false;
@@ -43,13 +42,14 @@ bool filterMsg(std::string &my_string) {
 
 int main() {
 	std::string current_string = update();
-	std::vector<ICommand*> command = {new Bash};
+	std::vector<ACommand*> command = {new Bash};
 	Dora dora(command);
 
 	while(true) {
 		std::string new_string = update();
 		if(!(new_string == current_string)) {
 			current_string = new_string;
+			std::cout << new_string << "\n";
 			if(filterMsg(new_string))
 				dora.runCommand(new_string);
 		}

@@ -8,15 +8,19 @@
 #ifndef SRC_ABSTRACTS_ACOMMAND_H_
 #define SRC_ABSTRACTS_ACOMMAND_H_
 
-#include "../interfaces/ICommand.h"
 #include <iostream>
 
-class ACommand: public ICommand {
+class ACommand {
+protected:
+	std::string prefix;
+
 public:
 	ACommand(std::string prefix);
 	virtual ~ACommand();
 
-	virtual std::string& getPrefix() override final;
+	virtual void run(std::string &my_string) = 0;
+
+	virtual std::string& getPrefix();
 };
 
 #endif /* SRC_ABSTRACTS_ACOMMAND_H_ */

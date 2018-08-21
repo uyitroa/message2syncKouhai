@@ -7,7 +7,7 @@
 
 #include "Dora.h"
 
-Dora::Dora(std::vector<ICommand*> &command) {
+Dora::Dora(std::vector<ACommand*> &command) {
 	this->command = command;
 }
 
@@ -15,7 +15,7 @@ void Dora::runCommand(std::string &my_string) {
 	filterInput(my_string)->run(my_string);
 }
 
-ICommand* Dora::filterInput(std::string &my_string) {
+ACommand* Dora::filterInput(std::string &my_string) {
 	for(int count = 0; count < this->command.size(); count++) {
 		std::string prefix = this->command[count]->getPrefix();
 		std::string sub = my_string.substr(0, prefix.size());
