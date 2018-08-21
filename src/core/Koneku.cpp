@@ -13,8 +13,9 @@
 #include "../manager/Dora.h"
 #include "../commands/Bash.h"
 
-Koneku::Koneku() {
-	// TODO Auto-generated constructor stub
+Koneku::Koneku(std::string file_name = "../res/data/line.txt", int wait = 3) {
+	this->file_name = file_name;
+	this->wait  = wait;
 
 }
 
@@ -38,7 +39,7 @@ std::string Koneku::readFile(std::string file_name) {
 
 std::string Koneku::update() {
 	system("app/baskup.sh");
-	std::string my_string = readFile(this->FILE_NAME);
+	std::string my_string = readFile(this->file_name);
 	return my_string;
 }
 
@@ -64,6 +65,6 @@ void Koneku::launch() {
 			if(filterMsg(new_string))
 				dora.runCommand(new_string);
 		}
-		sleep(WAIT);
+		sleep(this->wait);
 	}
 }

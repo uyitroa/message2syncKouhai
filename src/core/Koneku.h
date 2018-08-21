@@ -11,12 +11,12 @@
 #include <iostream>
 class Koneku {
 private:
-	const std::string FILE_NAME = "../res/data/line.txt";
-	const int WAIT = 3;
+	std::string file_name;
+	int wait;
 
 	std::string readFile(std::string file_name);
 public:
-	Koneku();
+	Koneku(std::string file_name  = "../res/data/line.txt", int wait = 3);
 	~Koneku();
 
 	std::string update();
