@@ -18,6 +18,7 @@ public:
 	ACommand(std::string prefix);
 	virtual ~ACommand();
 
+	// run command
 	virtual void run(std::string &my_string) = 0;
 
 	virtual std::string& getPrefix();

@@ -21,6 +21,8 @@ int Dora::findCommand(std::string &my_string) {
 	for(int count = 0; count < this->command.size(); count++) {
 		std::string prefix = this->command[count]->getPrefix();
 		std::string sub = my_string.substr(0, prefix.size());
+
+		// check if the prefix correspond to the command
 		if(prefix == sub)
 			return count;
 	}
