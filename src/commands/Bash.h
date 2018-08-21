@@ -10,6 +10,7 @@
 
 #include "../abstracts/ACommand.h"
 
+// run shell command
 class Bash : public ACommand {
 public:
 	Bash();
