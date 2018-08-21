@@ -14,7 +14,7 @@ public:
 	void runCommand(std::string &my_string);
 	
 	// select the right input
-	ACommand* filterInput(std::string &my_string);
+	int findCommand(std::string &my_string);
 };
 
 #endif

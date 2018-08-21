@@ -12,15 +12,17 @@ Dora::Dora(std::vector<ACommand*> &command) {
 }
 
 void Dora::runCommand(std::string &my_string) {
-	filterInput(my_string)->run(my_string);
+	int index = findCommand(my_string);
+	if(index != -1)
+		this->command[index]->run(my_string);
 }
 
-ACommand* Dora::filterInput(std::string &my_string) {
+int Dora::findCommand(std::string &my_string) {
 	for(int count = 0; count < this->command.size(); count++) {
 		std::string prefix = this->command[count]->getPrefix();
 		std::string sub = my_string.substr(0, prefix.size());
 		if(prefix == sub)
-			return this->command[count];
+			return count;
 	}
-	return nullptr;
+	return -1;
 }
