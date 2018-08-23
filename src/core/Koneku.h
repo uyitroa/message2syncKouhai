@@ -13,6 +13,7 @@
 
 class Koneku {
 private:
+	const std::string EXIT_COMMAND = "1|exit()|";
 	std::string file_name;
 	int wait;
 
@@ -32,6 +33,9 @@ public:
 	void launch();
 
 	void del(std::vector<ACommand*> &command);
+
+	// add command to "data base
+	void add(std::string &class_name, std::string &path);
 };
 
 #endif /* SRC_APP_KONEKU_H_ */

@@ -1,12 +1,15 @@
 #include <iostream>
-#include <fstream>
-#include <unistd.h>
-#include <vector>
 
 #include "../core/Koneku.h"
 
 int main() {
-	Koneku my_app;
-	my_app.launch();
+	int choice;
+	std::cout << "1.Run   2.Add class: ";
+	std::cin >> choice;
+
+	if(choice == 1) {
+		Koneku my_app;
+		my_app.launch();
+	}
 	return 0;
 }

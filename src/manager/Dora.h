@@ -11,6 +11,8 @@ private:
 public:
 	Dora(std::vector<ACommand*> &command);
 	
+	Dora();
+
 	void runCommand(std::string &my_string);
 	
 	// select the right input

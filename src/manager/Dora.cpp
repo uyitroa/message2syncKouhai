@@ -7,8 +7,14 @@
 
 #include "Dora.h"
 
+#include "../database/classdata.h"
+
 Dora::Dora(std::vector<ACommand*> &command) {
 	this->command = command;
+}
+
+Dora::Dora() {
+	this->command = command_list;
 }
 
 void Dora::runCommand(std::string &my_string) {
