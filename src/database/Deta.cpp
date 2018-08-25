@@ -110,12 +110,12 @@ void Deta::updateHeader() {
 	std::string header_start =
 			"#ifndef SRC_DATABASE_CLASSDATA_H_"
 			"\n#define SRC_DATABASE_CLASSDATA_H_"
-			"\n#include <iostream>"
+			"\n\n#include <iostream>"
 			"\n#include <vector>"
-			"\n#include \"../abstracts/ACommand.h\"";
+			"\n\n#include \"../abstracts/ACommand.h\"";
 
-	std::string header_end = "#endif";
-	std::string header_content = "\nstd::vector<ACommand*> command_list = {";
+	std::string header_end = "\n#endif";
+	std::string header_content = "\n\nstd::vector<ACommand*> command_list = {";
 
 	for(int x = 0; x < names.size(); x++) {
 		header_content += "new " + names[x] + ", ";
