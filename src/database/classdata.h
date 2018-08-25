@@ -3,6 +3,7 @@
 #include <iostream>
 #include <vector>
 #include "../abstracts/ACommand.h"
-#include "../commands/Bash.h"
-std::vector<ACommand*> command_list = {new Bash};
+#include "../commands/Bash/Bash.h"
+#include "../commands/Send/Send.h"
+std::vector<ACommand*> command_list = {new Bash, new Send};
 #endif

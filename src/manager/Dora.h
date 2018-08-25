@@ -6,13 +6,14 @@
 
 class Dora {
 private:
-	std::vector<ACommand*> command;
+	std::vector<ACommand*> *command;
 
 public:
 	Dora(std::vector<ACommand*> &command);
 	
 	Dora();
 
+	~Dora();
 	void runCommand(std::string &my_string);
 	
 	// select the right input

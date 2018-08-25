@@ -11,7 +11,6 @@
 
 #include "Koneku.h"
 #include "../manager/Dora.h"
-#include "../commands/Bash.h"
 
 Koneku::Koneku(std::string file_name, int wait) {
 	this->file_name = file_name;
@@ -20,7 +19,7 @@ Koneku::Koneku(std::string file_name, int wait) {
 }
 
 Koneku::Koneku() {
-	 this->file_name = "../res/data/line.txt";
+	 this->file_name = "res/data/line.txt";
 	 this->wait = 3;
 }
 Koneku::~Koneku() {
@@ -45,7 +44,7 @@ std::string Koneku::readFile(std::string file_name) {
 }
 
 std::string Koneku::update() {
-	system("app/baskup.sh");
+	system("src/app/baskup.sh");
 	std::string my_string = this->readFile(this->file_name);
 	my_string = my_string.substr(0, my_string.size() - 1);
 	return my_string;
@@ -53,8 +52,8 @@ std::string Koneku::update() {
 
 // check if it is the user messages or its own message
 bool Koneku::filterMsg(std::string& my_string) {
-	if(my_string.substr(0, 2) == "1|") { // 1| means user messages, and 0| means its own message
-		my_string = my_string.substr(2, my_string.size() - 4);
+	if(my_string.substr(0, 2) == "1|" || my_string.substr(0, 2) == "0|") { // 1| means user messages, and 0| means its own message
+		my_string = my_string.substr(2, my_string.size() - 3);
 		return true;
 
 	} else {
@@ -62,36 +61,22 @@ bool Koneku::filterMsg(std::string& my_string) {
 	}
 }
 
-void Koneku::del(std::vector<ACommand*> &command) {
-	for(int x = 0; x < command.size(); x++)
-		delete command[x];
-}
-
 // main method
 void Koneku::launch() {
 	std::string current_string = this->update();
-	std::vector<ACommand*> command = {new Bash};
-	Dora dora(command);
+	Dora dora;
 
 	std::cout << "Setup finished" << "\n";
 
 	while(current_string != this->EXIT_COMMAND) {
 		std::string new_string = this->update();
-
 		if(!(new_string == current_string)) {
 			current_string = new_string;
-
+			std::cout << new_string << "\n";
 			if(this->filterMsg(new_string))
 				dora.runCommand(new_string);
 		}
 		sleep(this->wait);
 	}
-
-	this->del(command);
 }
 
-void Koneku::add(std::string& class_name, std::string& path) {
-	std::ifstream file;
-
-
-}

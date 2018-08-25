@@ -10,22 +10,29 @@
 #include "../database/classdata.h"
 
 Dora::Dora(std::vector<ACommand*> &command) {
-	this->command = command;
+	this->command = &command;
 }
 
 Dora::Dora() {
-	this->command = command_list;
+	this->command = &command_list;
+	std::cout << command << " " << &command_list << "\n";
 }
+
+Dora::~Dora() {
+	for(int x = 0; x < command->size(); x++)
+		delete command->at(x);
+}
+
 
 void Dora::runCommand(std::string &my_string) {
 	int index = findCommand(my_string);
 	if(index != -1)
-		this->command[index]->run(my_string);
+		this->command->at(index)->run(my_string);
 }
 
 int Dora::findCommand(std::string &my_string) {
-	for(int count = 0; count < this->command.size(); count++) {
-		std::string prefix = this->command[count]->getPrefix();
+	for(int count = 0; count < this->command->size(); count++) {
+		std::string prefix = this->command->at(count)->getPrefix();
 		std::string sub = my_string.substr(0, prefix.size());
 
 		// check if the prefix correspond to the command

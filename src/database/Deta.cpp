@@ -40,8 +40,8 @@ Deta::Deta(std::string address, std::string name, std::string password) {
 }
 
 Deta::~Deta() {
-	this->dropDatabase();
-	delete this->con;
+/*	this->dropDatabase();
+	delete this->con;*/
 }
 
 void Deta::createClass(std::string name, std::string path) {
@@ -119,10 +119,9 @@ void Deta::updateHeader() {
 
 	for(int x = 0; x < names.size(); x++) {
 		header_content += "new " + names[x] + ", ";
-		std::cout << header_content << "\n";
 		header_start += "\n#include \"" + paths[x] +"\"";
 	}
-	header_content = header_content.substr(0, header_content.size() - 2);
+	header_content = header_content.substr(0, header_content.size() - 2); // delete the last ", "
 	header_content += "};\n";
 	header_content = header_start + header_content + header_end;
 
