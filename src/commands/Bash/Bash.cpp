@@ -21,10 +21,10 @@ std::string Bash::exec(const char* cmd) {
 	FILE* pipe = popen(cmd, "r");
 	if (!pipe)
 		return "ERROR";
-	char buffer[128];
+	char buffer[256];
 	std::string result = "";
 	while(!feof(pipe)) {
-		if(fgets(buffer, 128, pipe) != NULL)
+		if(fgets(buffer, 256, pipe) != NULL)
 			result += buffer;
 	}
 	pclose(pipe);
@@ -42,6 +42,7 @@ void Bash::run(std::string &my_string) {
 		send.run(command);
 	} else {
 		std::string command = "send \"" + result + "\" to 0762226688";
+		std::cout << "COMMAND: " << command << "\n\n\n\n";
 		send.run(command);
 	}
 }

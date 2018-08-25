@@ -7,7 +7,10 @@
 
 #include "Dora.h"
 
+#include <exception>
+
 #include "../database/classdata.h"
+/*#include "../commands/Send/Send.h"*/
 
 Dora::Dora(std::vector<ACommand*> &command) {
 	this->command = &command;
@@ -15,7 +18,6 @@ Dora::Dora(std::vector<ACommand*> &command) {
 
 Dora::Dora() {
 	this->command = &command_list;
-	std::cout << command << " " << &command_list << "\n";
 }
 
 Dora::~Dora() {
@@ -26,8 +28,16 @@ Dora::~Dora() {
 
 void Dora::runCommand(std::string &my_string) {
 	int index = findCommand(my_string);
-	if(index != -1)
-		this->command->at(index)->run(my_string);
+	if(index != -1) {
+		try {
+			this->command->at(index)->run(my_string);
+		} catch (std::exception &e) {
+			Send send;
+			std::string error = e.what();
+			std::string a_string = "send \"" + error + "\" to 0762226688";
+			send.run(a_string);
+		}
+	}
 }
 
 int Dora::findCommand(std::string &my_string) {
