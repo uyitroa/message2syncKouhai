@@ -26,9 +26,9 @@ Send::~Send() {
 std::vector<std::string> Send::extract(std::string& my_string) {
 	std::vector<std::string> string(2);
 	for(int x = 0; x < my_string.size(); x++) {
-		if(my_string.substr(x, x + 5) == "\" to ") {
-			string[0] = my_string.substr(0, x);
-			string[1] = my_string.substr(x + 4, my_string.size() - x);
+		if(my_string.substr(x, 5) == "\" to ") {
+			string[0] = my_string.substr(0, x + 1);
+			string[1] = my_string.substr(x + 5, my_string.size());
 			break;
 		}
 	}
@@ -39,8 +39,12 @@ std::vector<std::string> Send::extract(std::string& my_string) {
  * Input: send "hello world" to 123456789
  */
 void Send::run(std::string& my_string) {
+	// remove send from the command
+	my_string = my_string.substr(5, my_string.size());
+
 	std::vector<std::string> string_list = this->extract(my_string);
-	std::string command = "osascript src/commands/Send/send.scpt " + string_list[1] + " " + string_list[0];
+	std::string command = "osascript src/commands/Send/send.scpt " + string_list[1] + " " + string_list[0] + " &";
+	std::cout << command << "\n";
 	system(command.c_str());
 }
 

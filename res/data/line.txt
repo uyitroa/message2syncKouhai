@@ -112,3 +112,96 @@
 1|sjisdh|
 1|exit()|
 1|okay|
+1|ok|
+1|ls|
+1|ls|
+0|ls|
+0|ss|
+1|ls|
+0|ls|
+1|ss|
+0|cd ~/|
+1|cd ~/|
+1|touch tt.txt|
+1|vi tt.txt|
+0|ls|
+0|la|
+0|ls|
+1|didi|
+1|ls|
+1|cd ~/|
+0|cd ~|
+0|touch test.txt|
+0|touch test.txt|
+0|touch test.txt|
+1|uu|
+0|touch test.txt|
+0|touch a|
+0|mkdir build|
+0|touch test.txt|
+1|touch fuck|
+0|bash ls|
+1|bash ls|
+0|bash cd ~|
+1|mkdir fuck|
+0|bash mkdir okkk|
+0|bash ls|
+0|bash mkdir okkk|
+0|bash ls |
+1|bash ls|
+1|bash mk|
+0|bash osascript -e 'tell application "Messages" to send "Hello World" to buddy "me"'|
+0|bash osascript -e 'tell application "Messages" to send "Hello World" to buddy "ba"'|
+1|bash open -a safari|
+0|bash open -a discrord|
+1|bash open -a discord|
+1|bash open -a safari|
+1|bash cd ~|
+0|bash pwd|
+1|exit()|
+1|hello world|
+1|send "Hello World" to 0762226688|
+1|djd|
+0|send "Hello World" to 0762226688|
+1|rudj|
+0|send "Hello World" to 0762226688|
+1|fjjf|
+0|send "Hello World" to 0762226688|
+1|Hello World|
+1|Hello World|
+0|dike|
+1|send "Hello World" to 0762226688|
+0|chfu|
+1|send "Hello World" to 0762226688|
+0|tototor|
+1|send "Hello World" to 0762226688|
+0|ff|
+0|send "Hello World" to 0762226688|
+1|ff|
+1|send "Hello World" to 0762226688|
+1|gf|
+0|send "Hello World" to 0762226688|
+1|gh|
+1|send "Hello World" to 0762226688|
+1|Hello World|
+1|ff|
+1|bash ls|
+1|fjjf|
+1|bash ls|
+1|gf|
+1|bash ls|
+1|ff|
+0|bash ls|
+1|ss|
+1|bash ls|
+1|dd|
+1|bash ls|
+1|Default
+README.md
+res
+run.sh
+src|
+1|bash mkdir ok|
+1|done|
+1|bash rm -r ok|
+1|done|
