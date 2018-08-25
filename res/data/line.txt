@@ -1,32 +1,32 @@
 0|alo|
 1|salut|
-1| yo|
-1|yo|
-1|ah ok|
-1|no u|
-0|ip jsp|
-0|boi|
-1|boi|
-0|ily|
 1|ok|
 1|hj|
 1|tfffhfghfgfhfhf|
+1| yo|
+1|yo|
 1|je suis nul comme une merde|
+1|ah ok|
 1|oe|
+1|no u|
 1|ok|
 0|afd|
 1|je suis nul comme une merde|
 1|mac : et toi?|
+0|ip jsp|
 1|Hello World|
 1|Hello World|
 1|yo|
 1|Hello World|
-0|hi|
+0|boi|
 1|ok|
+1|boi|
+0|ily|
 1|Hello World|
 1|Hello World|
-0| kk|
+0|hi|
 1|kk|
+0| kk|
 0|https://www.youtube.com/watch?v=UvGPWWP98AE&frags=pl%2Cwn|
 0|
 |
@@ -45,9 +45,9 @@
 1|hey|
 0|hey|
 1|wassup|
+0|wassup|
 1|wasssup|
 0|wasssup|
-0|wassup|
 1|watjlk;jlkjjkljljl;jlkjkl;jkl;|
 0|watjlk;jlkjjkljljl;jlkjkl;jkl;|
 1|vincent gay|
@@ -81,3 +81,34 @@
 1|bash touch asdf.txt|
 1|bash open -a Safari|
 1|bash touch asdf.txt|
+0|bash open -a Safari|
+0|bash open -a Terminal|
+1|bash open -a Safari|
+1|bash open -a Terminal|
+1|bash osascript -e 'quit app "Terminal"'|
+0|bsah open safari|
+1|bash open -a Terminal|
+1|assf|
+0|bsah open safari|
+0|open -a Discord|
+1|open -a Discord|
+1|bash open -a Discord|
+0|bash pip3 install bs4|
+0|bash pip3 install bs4|
+0|open -a Discord|
+1|bash open -a Discord|
+1|exit()|
+0|bash open -a Discord|
+1|exit()|
+0|bash open -a Discord|
+1|bash open -a Discord|
+1|exit()|
+1|sdd|
+1|exit()|
+0|sdd|
+0|exit()|
+0|hdjefkw kf wf|
+1|exit()|
+1|sjisdh|
+1|exit()|
+1|okay|

@@ -27,13 +27,21 @@ private:
 
 public:
 	Deta(std::string address, std::string name, std::string password);
-	Deta();
+/*	Deta();*/
 	~Deta();
 
+	// CRUD CLASS
 	void createClass(std::string name, std::string path);
-
 	void readClass(std::vector<std::string> &names,
 			std::vector<std::string> &paths);
+	void updateClass(std::string table, std::string set, std::string where);
+	void deleteClass(std::string table, std::string where);
+
+	// save all class to header file classdata.h
+	void updateHeader();
+
+	// drop
+	void dropDatabase();
 };
 
 #endif /* SRC_DATABASE_DETA_H_ */

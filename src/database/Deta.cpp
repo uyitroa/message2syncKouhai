@@ -7,6 +7,9 @@
 
 #include "Deta.h"
 
+#include <iostream>
+#include <fstream>
+
 #include <cppconn/exception.h>
 #include <cppconn/resultset.h>
 #include <cppconn/statement.h>
@@ -23,7 +26,7 @@ Deta::Deta(std::string address, std::string name, std::string password) {
 		// if the database is not created
 		if(e.what() == this->NODATABASE) {
 			sql::Statement *stmt = this->con->createStatement();
-			stmt->execute("CREATE DATABSE " + this->DATABASENAME);
+			stmt->execute("CREATE DATABASE " + this->DATABASENAME);
 			this->con->setSchema(this->DATABASENAME);
 			stmt->execute("CREATE TABLE classes (id INT NOT NULL AUTO_INCREMENT, name VARCHAR(40), path VARCHAR(200), created DATE, PRIMARY KEY(id))");
 
@@ -36,47 +39,102 @@ Deta::Deta(std::string address, std::string name, std::string password) {
 
 }
 
-Deta::Deta() { // @suppress("Class members should be properly initialized")
-	Deta("tcp://127.0.0.1:3306", "root", "encrypted");
-}
-
 Deta::~Deta() {
+	this->dropDatabase();
 	delete this->con;
 }
 
 void Deta::createClass(std::string name, std::string path) {
-	sql::PreparedStatement *prep_stmt;
+	sql::Statement *stmt;
+	stmt = this->con->createStatement();
 
-	prep_stmt = this->con->prepareStatement("INSERT INTO classes(name, path, created) VALUES(?, ?, NOW())");
+	stmt->execute("INSERT INTO classes (name, path, created) VALUES ('" + name + "', '" + path + "', NOW())");
+	this->updateClass("classes_amount", "amount = amount + 1", "id = 1");
 
-	prep_stmt->setString(1, name);
-	prep_stmt->setString(2, path);
-
-	prep_stmt->execute();
-
-	delete prep_stmt;
+	delete stmt;
 }
 
 void Deta::readClass(std::vector<std::string>& names,
-		std::vector<std::string>& paths) {
+	std::vector<std::string>& paths) {
 	sql::Statement *stmt = this->con->createStatement();
 	sql::ResultSet *res;
 
-	res = stmt->executeQuery("SELECT * from classes_amount");
-	int size = res->getInt(2);
+	res = stmt->executeQuery("SELECT amount from classes_amount");
+	res->next();
+	int size = 0;
+	size = res->getInt(1);
 
-	names.reserve(size);
-	paths.reserve(size);
+	names.resize(size);
+	paths.resize(size);
+/*	std::cout << size << "\n";*/
 
-	res = stmt->executeQuery("SELECT * from classes");
+	sql::ResultSet *result_set = stmt->executeQuery("SELECT * from classes");
 	int index = 0;
-	while(res->next()) {
-		names[index] = res->getString(2);
-		paths[index] = res->getString(3);
+	while(result_set->next()) {
+		names[index] = result_set->getString(2);
+		paths[index] = result_set->getString(3);
+		std::cout << names[index] << "\n";
 		index++;
 	}
 
 	delete res;
+	delete result_set;
 	delete stmt;
+}
 
+void Deta::updateClass(std::string table, std::string set, std::string where) {
+	sql::Statement *stmt;
+	stmt = this->con->createStatement();
+
+	stmt->execute("UPDATE " + table + " SET " + set + " WHERE " + where);
+
+	delete stmt;
+}
+
+void Deta::deleteClass(std::string table, std::string where) {
+	sql::Statement *stmt;
+	stmt = this->con->createStatement();
+
+	stmt->execute("DELETE FROM " + table + " WHERE " + where);
+
+	delete stmt;
+}
+
+/* write all class in header classdata.h
+ * to store class data */
+void Deta::updateHeader() {
+	std::vector<std::string> names;
+	std::vector<std::string> paths;
+	this->readClass(names, paths);
+
+	std::string header_start =
+			"#ifndef SRC_DATABASE_CLASSDATA_H_"
+			"\n#define SRC_DATABASE_CLASSDATA_H_"
+			"\n#include <iostream>"
+			"\n#include <vector>"
+			"\n#include \"../abstracts/ACommand.h\"";
+
+	std::string header_end = "#endif";
+	std::string header_content = "\nstd::vector<ACommand*> command_list = {";
+
+	for(int x = 0; x < names.size(); x++) {
+		header_content += "new " + names[x] + ", ";
+		std::cout << header_content << "\n";
+		header_start += "\n#include \"" + paths[x] +"\"";
+	}
+	header_content = header_content.substr(0, header_content.size() - 2);
+	header_content += "};\n";
+	header_content = header_start + header_content + header_end;
+
+	// write file
+	std::ofstream myfile;
+	myfile.open("src/database/classdata.h");
+	myfile << header_content;
+	myfile.close();
+}
+
+void Deta::dropDatabase() {
+	sql::Statement *stmt;
+	stmt = this->con->createStatement();
+	stmt->execute("drop database " + this->DATABASENAME);
 }

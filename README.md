@@ -3,6 +3,10 @@
 A program which do everythin through imessage.
 It lets you control your pc with phone
 
+## Prequirements
+mysql
+mysql-connector c++
+
 ## Creating new command
 
 Folder: src/commands/
