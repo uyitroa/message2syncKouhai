@@ -52,8 +52,9 @@ std::string Koneku::update() {
 
 // check if it is the user messages or its own message
 bool Koneku::filterMsg(std::string& my_string) {
-	if(my_string.substr(0, 2) == "1|" || my_string.substr(0, 2) == "0|") { // 1| means user messages, and 0| means its own message
+	if(my_string.substr(0, 2) == "0|") { // 1| means user messages, and 0| means its own message
 		my_string = my_string.substr(2, my_string.size() - 3);
+		std::cout << my_string << "\n";
 		return true;
 
 	} else {
@@ -72,7 +73,6 @@ void Koneku::launch() {
 		std::string new_string = this->update();
 		if(!(new_string == current_string)) {
 			current_string = new_string;
-			std::cout << new_string << "\n";
 			if(this->filterMsg(new_string))
 				dora.runCommand(new_string);
 		}

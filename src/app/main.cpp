@@ -13,10 +13,12 @@ int main() {
 		my_app.launch();
 	} else {
 		Deta deta("localhost", "root", "Rairyuuaottg87");
-/*		std::string name = "Bash";
-		std::string path = "../commands/Bash/Bash.h";*/
+
 		deta.createClass("Bash", "../commands/Bash/Bash.h");
 		deta.createClass("Send", "../commands/Send/Send.h");
+		deta.createClass("Key", "../commands/Key/Key.h");
+		deta.createClass("SharePic", "../commands/SharePic/SharePic.h");
+		deta.createClass("Shortcut", "../commands/Shortcut/Shortcut.h");
 		/*std::cout << "OK" << "\n";*/
 		deta.updateHeader();
 	}

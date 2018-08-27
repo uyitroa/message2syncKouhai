@@ -10,16 +10,25 @@
 
 #include <iostream>
 #include <vector>
+
 #include <mysql.h>
 
 #include <mysql_connection.h>
 #include <cppconn/driver.h>
+#include <cppconn/resultset.h>
+#include <cppconn/statement.h>
+/*
+#include "../../lib/mysql.h"
 
+#include "../../lib/mysql_connection.h"
+#include "../../lib/cppconn/driver.h"
+*/
 
 class Deta {
 private:
 	sql::Driver *driver;
 	sql::Connection *con;
+	sql::Statement *stmt;
 
 	const std::string DATABASENAME = "mydatabase";
 	const std::string NODATABASE = "Unknown database '" + this->DATABASENAME + "'";
@@ -40,8 +49,19 @@ public:
 	// save all class to header file classdata.h
 	void updateHeader();
 
-	// drop
 	void dropDatabase();
+
+	// Create and delete table
+	void createColumn(std::string column, std::string row);
+	void deleteColumn(std::string column);
+	bool columnExist(std::string column);
+
+	// CRUD to table
+	void insertColumn(std::string column, std::string field_name, std::string row);
+	void updateColumn(std::string column, std::string old_row, std::string new_row);
+	sql::ResultSet* readColumn(std::string column, std::string row); // first is always id
+	sql::ResultSet* readAllColumn(std::string column);
+	void deleteColumn(std::string column, std::string row);
 };
 
 #endif /* SRC_DATABASE_DETA_H_ */

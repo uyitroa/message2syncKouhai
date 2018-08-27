@@ -11,52 +11,52 @@
 #include <fstream>
 
 #include <cppconn/exception.h>
-#include <cppconn/resultset.h>
-#include <cppconn/statement.h>
 #include <cppconn/prepared_statement.h>
+/*
+#include "../../lib/cppconn/exception.h"
+#include "../../lib/cppconn/resultset.h"
+#include "../../lib/cppconn/statement.h"
+#include "../../lib/cppconn/prepared_statement.h"
+*/
 
 Deta::Deta(std::string address, std::string name, std::string password) {
 	this->driver = get_driver_instance();
 	this->con = driver->connect(address, name, password);
-
+	this->stmt = this->con->createStatement();
 	try {
-		this->con->setSchema(this->DATABASENAME);
+		con->setSchema(this->DATABASENAME);
+		std::cout << "Connected" << "\n";
 
 	} catch (sql::SQLException &e) {
 		// if the database is not created
 		if(e.what() == this->NODATABASE) {
-			sql::Statement *stmt = this->con->createStatement();
 			stmt->execute("CREATE DATABASE " + this->DATABASENAME);
-			this->con->setSchema(this->DATABASENAME);
+			con->setSchema(this->DATABASENAME);
 			stmt->execute("CREATE TABLE classes (id INT NOT NULL AUTO_INCREMENT, name VARCHAR(40), path VARCHAR(200), created DATE, PRIMARY KEY(id))");
 
 			// check if column amount exist for readClass, which need a vector, and if we know already the amount, no need for push_back();
 			stmt->execute("CREATE TABLE classes_amount (id INT NOT NULL AUTO_INCREMENT, amount INT, PRIMARY KEY(id))");
 			stmt->execute("INSERT INTO classes_amount (amount) VALUES (0)");
-			delete stmt;
+		} else {
+			std::cout << "ERROR " << e.what() << "\n";
 		}
 	}
 
 }
 
 Deta::~Deta() {
-/*	this->dropDatabase();
-	delete this->con;*/
+	std::cout << "Deleting deta" << "\n";
+	delete this->con;
+	delete this->stmt;
 }
 
 void Deta::createClass(std::string name, std::string path) {
-	sql::Statement *stmt;
-	stmt = this->con->createStatement();
-
 	stmt->execute("INSERT INTO classes (name, path, created) VALUES ('" + name + "', '" + path + "', NOW())");
 	this->updateClass("classes_amount", "amount = amount + 1", "id = 1");
-
-	delete stmt;
 }
 
 void Deta::readClass(std::vector<std::string>& names,
 	std::vector<std::string>& paths) {
-	sql::Statement *stmt = this->con->createStatement();
 	sql::ResultSet *res;
 
 	res = stmt->executeQuery("SELECT amount from classes_amount");
@@ -79,25 +79,14 @@ void Deta::readClass(std::vector<std::string>& names,
 
 	delete res;
 	delete result_set;
-	delete stmt;
 }
 
 void Deta::updateClass(std::string table, std::string set, std::string where) {
-	sql::Statement *stmt;
-	stmt = this->con->createStatement();
-
 	stmt->execute("UPDATE " + table + " SET " + set + " WHERE " + where);
-
-	delete stmt;
 }
 
 void Deta::deleteClass(std::string table, std::string where) {
-	sql::Statement *stmt;
-	stmt = this->con->createStatement();
-
 	stmt->execute("DELETE FROM " + table + " WHERE " + where);
-
-	delete stmt;
 }
 
 /* write all class in header classdata.h
@@ -133,7 +122,53 @@ void Deta::updateHeader() {
 }
 
 void Deta::dropDatabase() {
-	sql::Statement *stmt;
-	stmt = this->con->createStatement();
 	stmt->execute("drop database " + this->DATABASENAME);
 }
+
+
+void Deta::createColumn(std::string column, std::string row) {
+	stmt->execute("CREATE TABLE " + column + "(id INT NOT NULL AUTO_INCREMENT, " + row + ", PRIMARY KEY (id))");
+}
+void Deta::deleteColumn(std::string column) {
+	stmt->execute("DROP TABLE " + column);
+}
+
+
+bool Deta::columnExist(std::string column) {
+	try {
+		stmt->execute("SELECT 1 FROM " + column + " LIMIT 1");
+		return true;
+	} catch(sql::SQLException &e) {
+		std::cout << e.what() << "\n";
+		return false;
+	}
+}
+
+
+void Deta::insertColumn(std::string column, std::string field_name , std::string row) {
+	stmt->execute("INSERT INTO " + column + " (" + field_name + ")" +" VALUES (" + row + ")");
+}
+
+void Deta::updateColumn(std::string column, std::string old_row,
+		std::string new_row) {
+	stmt->execute("UPDATE " + column + " SET " + new_row + " WHERE " + old_row);
+}
+
+sql::ResultSet* Deta::readColumn(std::string column, std::string row) {
+	sql::ResultSet *res;
+
+	res = stmt->executeQuery("SELECT * FROM " + column + " WHERE " + row);
+	return res;
+}
+
+//delete sql::ResultSet after !!
+sql::ResultSet* Deta::readAllColumn(std::string column) {
+	sql::ResultSet *res;
+	res = stmt->executeQuery("SELECT * FROM " + column);
+	return res;
+}
+
+void Deta::deleteColumn(std::string column, std::string row) {
+	stmt->execute("DELETE FROM " + column + " WHERE " + row);
+}
+
