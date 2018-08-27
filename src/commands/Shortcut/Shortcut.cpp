@@ -6,8 +6,11 @@
  */
 
 #include "Shortcut.h"
-#include "../../manager/Dora.h"
+
+#include <fstream>
+
 #include "../Send/Send.h"
+
 
 Shortcut::Shortcut()
 	: ACommand("sc") {
@@ -25,31 +28,36 @@ void Shortcut::create(std::string input, Deta &deta) {
 	for(int x = 0; x < input.size(); x++) {
 		if(input.substr(x, 2) == "->") {
 			real = input.substr(0, x);
-			alias = input.substr(x, input.size());
+			alias = input.substr(x + 2, input.size());
 		}
 	}
+
 	try {
 		deta.insertColumn("shortcuts", "alias, real_command", "'" + alias + "', '" + real +"'");
 	} catch (sql::SQLException &e) {
-		deta.updateColumn("shortcuts", "alias = " + alias, "real_command = " + real);
+		deta.updateColumn("shortcuts", "alias = '" + alias + "'", "real_command = '" + real + "'");
 	}
 }
 
 void Shortcut::connectToManager(std::string &input, Deta &deta) {
-	sql::ResultSet *res = deta.readColumn("shortcuts", "alias = my_string");
+	sql::ResultSet *res = deta.readColumn("shortcuts", "alias = '" + input + "'");
 	res->next();
 	std::string real = res->getString(3);
+	real = "0|" + real + "|";
+
+	std::ofstream out;
+	out.open("myfile.txt", std::ios::app);
+	out << real;
+	out.close();
+
 	delete res;
-	Dora dora;
-	dora.runCommand(real);
 }
 
 void Shortcut::run(std::string& my_string) {
 	my_string = my_string.substr(3, my_string.size()); // remove sc from the input
-
 	Deta deta("localhost", "root", "Rairyuuaottg87");
-
 	if(!deta.columnExist("shortcuts")) {
+		std::cout << "Creating table" << "\n";
 		deta.createColumn("shortcuts", "alias VARCHAR(100) UNIQUE, real_command VARCHAR(100)");
 	}
 
@@ -59,7 +67,7 @@ void Shortcut::run(std::string& my_string) {
 		this->create(my_string, deta);
 
 		Send send;
-		std::string command = "send \"done\" to 0762226688";
+		std::string command = "send \"done\" to $0762226688";
 		send.run(command);
 
 	} else {

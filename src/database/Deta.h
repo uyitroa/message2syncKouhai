@@ -17,12 +17,6 @@
 #include <cppconn/driver.h>
 #include <cppconn/resultset.h>
 #include <cppconn/statement.h>
-/*
-#include "../../lib/mysql.h"
-
-#include "../../lib/mysql_connection.h"
-#include "../../lib/cppconn/driver.h"
-*/
 
 class Deta {
 private:
@@ -37,7 +31,7 @@ private:
 public:
 	Deta(std::string address, std::string name, std::string password);
 /*	Deta();*/
-	~Deta();
+	virtual ~Deta();
 
 	// CRUD CLASS
 	void createClass(std::string name, std::string path);

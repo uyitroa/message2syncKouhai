@@ -26,6 +26,6 @@ void Key::run(std::string& my_string) {
 	std::cout << cmd << "\n";
 	system(cmd.c_str());
 	Send send;
-	std::string send_command = "send \"done\" to 0762226688";
+	std::string send_command = "send \"done\" to $0762226688";
 	send.run(send_command);
 }

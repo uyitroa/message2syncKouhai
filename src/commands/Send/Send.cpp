@@ -26,10 +26,14 @@ Send::~Send() {
 std::vector<std::string> Send::extract(std::string& my_string) {
 	std::vector<std::string> string(2);
 	for(int x = 0; x < my_string.size(); x++) {
-		if(my_string.substr(x, 5) == "\" to ") {
+		if(my_string.substr(x, 6) == "\" to $") {
 			string[0] = my_string.substr(0, x + 1);
-			string[1] = my_string.substr(x + 5, my_string.size());
+			string[1] = my_string.substr(x + 6, my_string.size());
 			break;
+		}
+
+		if(my_string[x] == '"' && x != 0){
+			my_string[x] = '\'';
 		}
 	}
 	return string;
@@ -43,8 +47,8 @@ void Send::run(std::string& my_string) {
 	my_string = my_string.substr(5, my_string.size());
 
 	std::vector<std::string> string_list = this->extract(my_string);
+	std::cout << string_list[1] << "\n";
 	std::string command = "osascript src/commands/Send/send.scpt " + string_list[1] + " " + string_list[0] + " &";
-	std::cout << command << "\n";
 	system(command.c_str());
 }
 

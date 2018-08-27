@@ -13,7 +13,7 @@ public:
 	
 	Dora();
 
-	~Dora();
+	virtual ~Dora();
 	void runCommand(std::string &my_string);
 	
 	// select the right input

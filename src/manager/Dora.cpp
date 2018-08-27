@@ -21,6 +21,7 @@ Dora::Dora() {
 }
 
 Dora::~Dora() {
+	std::cout << "Delete dora" << "\n";
 	for(int x = 0; x < command->size(); x++)
 		delete command->at(x);
 }
@@ -34,7 +35,7 @@ void Dora::runCommand(std::string &my_string) {
 		} catch (std::exception &e) {
 			Send send;
 			std::string error = e.what();
-			std::string a_string = "send \"" + error + "\" to 0762226688";
+			std::string a_string = "send \"" + error + "\" to $0762226688";
 			send.run(a_string);
 		}
 	}

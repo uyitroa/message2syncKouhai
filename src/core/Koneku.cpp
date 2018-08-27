@@ -52,7 +52,7 @@ std::string Koneku::update() {
 
 // check if it is the user messages or its own message
 bool Koneku::filterMsg(std::string& my_string) {
-	if(my_string.substr(0, 2) == "0|") { // 1| means user messages, and 0| means its own message
+	if(my_string.substr(0, 2) == "0|") { // 0| means user messages, and 1| means its own message
 		my_string = my_string.substr(2, my_string.size() - 3);
 		std::cout << my_string << "\n";
 		return true;

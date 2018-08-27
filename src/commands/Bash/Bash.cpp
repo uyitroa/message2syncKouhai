@@ -38,10 +38,10 @@ void Bash::run(std::string &my_string) {
 	std::string result = exec(my_string.c_str());
 	Send send;
 	if(result == "") {
-		std::string command = "send \"done\" to 0762226688";
+		std::string command = "send \"done\" to $0762226688";
 		send.run(command);
 	} else {
-		std::string command = "send \"" + result + "\" to 0762226688";
+		std::string command = "send \"" + result + "\" to $0762226688";
 		std::cout << "COMMAND: " << command << "\n\n\n\n";
 		send.run(command);
 	}

@@ -139,13 +139,12 @@ void Deta::deleteColumn(std::string column) {
 
 
 bool Deta::columnExist(std::string column) {
-	try {
-		stmt->execute("SELECT 1 FROM " + column + " LIMIT 1");
-		return true;
-	} catch(sql::SQLException &e) {
-		std::cout << e.what() << "\n";
-		return false;
-	}
+	sql::ResultSet *res = stmt->executeQuery("SHOW TABLES LIKE '" + column + "';");
+	bool empty = false;
+	if(res->next())
+		empty = true;
+	delete res;
+	return empty;
 }
 
 
