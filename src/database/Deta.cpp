@@ -32,7 +32,7 @@ Deta::Deta(std::string address, std::string name, std::string password) {
 		if(e.what() == this->NODATABASE) {
 			stmt->execute("CREATE DATABASE " + this->DATABASENAME);
 			con->setSchema(this->DATABASENAME);
-			stmt->execute("CREATE TABLE classes (id INT NOT NULL AUTO_INCREMENT, name VARCHAR(40), path VARCHAR(200), created DATE, PRIMARY KEY(id))");
+			stmt->execute("CREATE TABLE classes (id INT NOT NULL AUTO_INCREMENT, name VARCHAR(40) UNIQUE, path VARCHAR(200), created DATE, PRIMARY KEY(id))");
 
 			// check if column amount exist for readClass, which need a vector, and if we know already the amount, no need for push_back();
 			stmt->execute("CREATE TABLE classes_amount (id INT NOT NULL AUTO_INCREMENT, amount INT, PRIMARY KEY(id))");
@@ -51,8 +51,12 @@ Deta::~Deta() {
 }
 
 void Deta::createClass(std::string name, std::string path) {
-	stmt->execute("INSERT INTO classes (name, path, created) VALUES ('" + name + "', '" + path + "', NOW())");
-	this->updateClass("classes_amount", "amount = amount + 1", "id = 1");
+	try {
+		stmt->execute("INSERT INTO classes (name, path, created) VALUES ('" + name + "', '" + path + "', NOW())");
+		this->updateClass("classes_amount", "amount = amount + 1", "id = 1");
+	} catch (sql::SQLException &e) {
+		std::cout << name << " already exists" << "\n";
+	}
 }
 
 void Deta::readClass(std::vector<std::string>& names,
@@ -122,7 +126,7 @@ void Deta::updateHeader() {
 }
 
 void Deta::dropDatabase() {
-	stmt->execute("drop database " + this->DATABASENAME);
+	stmt->execute("DROP DATABASE " + this->DATABASENAME);
 }
 
 
@@ -156,7 +160,6 @@ void Deta::updateColumn(std::string column, std::string old_row,
 
 sql::ResultSet* Deta::readColumn(std::string column, std::string row) {
 	sql::ResultSet *res;
-
 	res = stmt->executeQuery("SELECT * FROM " + column + " WHERE " + row);
 	return res;
 }
