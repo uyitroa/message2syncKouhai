@@ -130,10 +130,10 @@ void Deta::dropDatabase() {
 }
 
 
-void Deta::createColumn(std::string column, std::string row) {
+void Deta::createTable(std::string column, std::string row) {
 	stmt->execute("CREATE TABLE " + column + "(id INT NOT NULL AUTO_INCREMENT, " + row + ", PRIMARY KEY (id))");
 }
-void Deta::deleteColumn(std::string column) {
+void Deta::deleteTable(std::string column) {
 	stmt->execute("DROP TABLE " + column);
 }
 

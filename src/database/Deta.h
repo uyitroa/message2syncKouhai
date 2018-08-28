@@ -46,8 +46,8 @@ public:
 	void dropDatabase();
 
 	// Create and delete table
-	void createColumn(std::string column, std::string row);
-	void deleteColumn(std::string column);
+	void createTable(std::string column, std::string row);
+	void deleteTable(std::string column);
 	bool columnExist(std::string column);
 
 	// CRUD to table
