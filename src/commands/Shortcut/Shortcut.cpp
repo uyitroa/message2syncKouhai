@@ -43,10 +43,10 @@ void Shortcut::connectToManager(std::string &input, Deta &deta) {
 	sql::ResultSet *res = deta.readColumn("shortcuts", "alias = '" + input + "'");
 	res->next();
 	std::string real = res->getString(3);
-	real = "0|" + real + "|";
+	real = "0|" + real + "|\n";
 
 	std::ofstream out;
-	out.open("myfile.txt", std::ios::app);
+	out.open("res/data/line.txt", std::ios::app);
 	out << real;
 	out.close();
 

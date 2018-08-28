@@ -1,207 +1,36 @@
-0|alo|
-1|salut|
-1|ok|
-1|hj|
-1|tfffhfghfgfhfhf|
-1| yo|
-1|yo|
-1|je suis nul comme une merde|
-1|ah ok|
-1|oe|
-1|no u|
-1|ok|
-0|afd|
-1|je suis nul comme une merde|
-1|mac : et toi?|
-0|ip jsp|
-1|Hello World|
-1|Hello World|
-1|yo|
-1|Hello World|
-0|boi|
-1|ok|
-1|boi|
-0|ily|
-1|Hello World|
-1|Hello World|
-0|hi|
-1|kk|
-0| kk|
-0|https://www.youtube.com/watch?v=UvGPWWP98AE&frags=pl%2Cwn|
-0|
-|
-0|u succ|
-0|ily boi|
-0|qwerty|
-0|d|
-0|jqre|
-0|r|
-0|w|
-0|idk mankjdksksjaojdlajdpajdojs|
-0|ily boi|
-0|wtf|
-0|it doesnt work|
-0|rip|
-1|hey|
-0|hey|
-1|wassup|
-0|wassup|
-1|wasssup|
-0|wasssup|
-1|watjlk;jlkjjkljljl;jlkjkl;jkl;|
-0|watjlk;jlkjjkljljl;jlkjkl;jkl;|
-1|vincent gay|
-0|vincent gay|
-1|mac c pour les pro|
-0|mac c pour les pro|
-0|slt|
-1|slt sale pute|
-0|slt sale pute|
-0| o|
-0|tyjik|
-1|nugnhnnov umumno h|
-0|ta gueule|
-1|pute|
-1|w|
-0|bash open -a Safari|
-1|bash touch asdf.txt|
-1|bash open -a Safari|
-1|bash touch asdf.txt|
-1|bash open -a Safari|
-0|bash touch asdf.txt|
-1|bash open -a Safari|
-1|bash touch asdf.txt|
-1|bash open -a Safari|
-1|bash touch asdf.txt|
-1|bash open -a Safari|
-0|bash touch asdf.txt|
-1|bash open -a Safari|
-0|bash touch asdf.txt|
-1|bash open -a Safari|
-1|bash touch asdf.txt|
-1|bash open -a Safari|
-1|bash touch asdf.txt|
-0|bash open -a Safari|
-0|bash open -a Terminal|
-1|bash open -a Safari|
-1|bash open -a Terminal|
-1|bash osascript -e 'quit app "Terminal"'|
-0|bsah open safari|
-1|bash open -a Terminal|
-1|assf|
-0|bsah open safari|
-0|open -a Discord|
-1|open -a Discord|
-1|bash open -a Discord|
-0|bash pip3 install bs4|
-0|bash pip3 install bs4|
-0|open -a Discord|
-1|bash open -a Discord|
-1|exit()|
-0|bash open -a Discord|
-1|exit()|
-0|bash open -a Discord|
-1|bash open -a Discord|
-1|exit()|
-1|sdd|
-1|exit()|
-0|sdd|
-0|exit()|
-0|hdjefkw kf wf|
-1|exit()|
-1|sjisdh|
-1|exit()|
-1|okay|
-1|ok|
-1|ls|
-1|ls|
-0|ls|
-0|ss|
-1|ls|
-0|ls|
-1|ss|
-0|cd ~/|
-1|cd ~/|
-1|touch tt.txt|
-1|vi tt.txt|
-0|ls|
-0|la|
-0|ls|
-1|didi|
-1|ls|
-1|cd ~/|
-0|cd ~|
-0|touch test.txt|
-0|touch test.txt|
-0|touch test.txt|
-1|uu|
-0|touch test.txt|
-0|touch a|
-0|mkdir build|
-0|touch test.txt|
-1|touch fuck|
+0|bash ls ~|
+0|bash ls ~|
+0|bash ls ~|
 0|bash ls|
-1|bash ls|
-0|bash cd ~|
-1|mkdir fuck|
-0|bash mkdir okkk|
-0|bash ls|
-0|bash mkdir okkk|
-0|bash ls |
-1|bash ls|
-1|bash mk|
-0|bash osascript -e 'tell application "Messages" to send "Hello World" to buddy "me"'|
-0|bash osascript -e 'tell application "Messages" to send "Hello World" to buddy "ba"'|
-1|bash open -a safari|
-0|bash open -a discrord|
-1|bash open -a discord|
-1|bash open -a safari|
-1|bash cd ~|
-0|bash pwd|
-1|exit()|
-1|hello world|
-1|send "Hello World" to 0762226688|
-1|djd|
-0|send "Hello World" to 0762226688|
-1|rudj|
-0|send "Hello World" to 0762226688|
-1|fjjf|
-0|send "Hello World" to 0762226688|
-1|Hello World|
-1|Hello World|
-0|dike|
-1|send "Hello World" to 0762226688|
-0|chfu|
-1|send "Hello World" to 0762226688|
-0|tototor|
-1|send "Hello World" to 0762226688|
-0|ff|
-0|send "Hello World" to 0762226688|
-1|ff|
-1|send "Hello World" to 0762226688|
-1|gf|
-0|send "Hello World" to 0762226688|
-1|gh|
-1|send "Hello World" to 0762226688|
-1|Hello World|
-1|ff|
-1|bash ls|
-1|fjjf|
-1|bash ls|
-1|gf|
-1|bash ls|
-1|ff|
-0|bash ls|
-1|ss|
-1|bash ls|
-1|dd|
-1|bash ls|
 1|Default
 README.md
+lib.zip
 res
 run.sh
 src|
-1|bash mkdir ok|
+0|sc discordq|
+0|sc alias:bash ls->show|
+0|sc show|
+0|bash cat res/data/line.txt|
+1|0|bash ls ~|
+0|bash ls ~|
+0|bash ls ~|
+0|bash ls|
+1|Default
+README.md
+lib.zip
+res
+run.sh
+src|
+0|sc discordq|
+0|sc alias:bash ls->show|
+0|sc show|
+0|bash cat res/data/line.txt||
 1|done|
-1|bash rm -r ok|
-1|done|
+0|sc discordq|
+0|sc discordq|
+0|bash ls|
+0|ls|
+0|bash ls|
+0|sc discordq|
+0|bash open -a safari|
