@@ -53,12 +53,16 @@ void Shortcut::connectToManager(std::string &input, Deta &deta) {
 	delete res;
 }
 
+void Shortcut::deleteSc(std::string alias, Deta &deta) {
+	deta.deleteColumn("shortcuts" ,alias);
+}
+
 void Shortcut::run(std::string& my_string) {
 	my_string = my_string.substr(3, my_string.size()); // remove sc from the input
 	Deta deta("localhost", "root", "Rairyuuaottg87");
 	if(!deta.columnExist("shortcuts")) {
 		std::cout << "Creating table" << "\n";
-		deta.createColumn("shortcuts", "alias VARCHAR(100) UNIQUE, real_command VARCHAR(100)");
+		deta.createTable("shortcuts", "alias VARCHAR(100) UNIQUE, real_command VARCHAR(100)");
 	}
 
 	if(my_string.substr(0, 6) == "alias:") {
@@ -70,6 +74,13 @@ void Shortcut::run(std::string& my_string) {
 		std::string command = "send \"done\" to $0762226688";
 		send.run(command);
 
+	} else if(my_string.substr(0, 8) == "delete()"){
+		my_string = "alias = '" + my_string.substr(9, my_string.size()) + "'";
+		this->deleteSc(my_string, deta);
+
+		Send send;
+		std::string command = "send \"done\" to $0762226688";
+		send.run(command);
 	} else {
 		this->connectToManager(my_string, deta);
 	}

@@ -14,6 +14,7 @@ class Shortcut: public ACommand {
 private:
 	void create(std::string input, Deta &deta);
 	void connectToManager(std::string &input, Deta &deta);
+	void deleteSc(std::string alias, Deta &deta);
 
 public:
 	Shortcut();
