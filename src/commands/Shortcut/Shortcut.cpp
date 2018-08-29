@@ -8,9 +8,9 @@
 #include "Shortcut.h"
 
 #include <fstream>
+#include <cppconn/exception.h>
 
 #include "../Send/Send.h"
-
 
 Shortcut::Shortcut()
 	: ACommand("sc") {

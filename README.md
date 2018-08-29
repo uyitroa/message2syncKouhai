@@ -4,9 +4,9 @@ A program which do everythin through imessage.
 It lets you control your pc with phone
 
 ## Prequirements
-mysql
+mysql : https://dev.mysql.com/downloads/mysql/
 
-mysql-connector c++
+mysql-connector c++  https://github.com/anhstudios/mysql-connector-cppi && https://dev.mysql.com/downloads/connector/cpp/8.0.html
 
 ## Creating new command
 

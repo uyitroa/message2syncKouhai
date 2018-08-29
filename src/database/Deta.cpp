@@ -12,12 +12,6 @@
 
 #include <cppconn/exception.h>
 #include <cppconn/prepared_statement.h>
-/*
-#include "../../lib/cppconn/exception.h"
-#include "../../lib/cppconn/resultset.h"
-#include "../../lib/cppconn/statement.h"
-#include "../../lib/cppconn/prepared_statement.h"
-*/
 
 Deta::Deta(std::string address, std::string name, std::string password) {
 	this->driver = get_driver_instance();
