@@ -12,14 +12,12 @@ int main() {
 		Koneku my_app;
 		my_app.launch();
 	} else {
-		Deta deta("localhost", "root", "Rairyuuaottg87");
-
+		Deta deta;
 		deta.createClass("Bash", "../commands/Bash/Bash.h");
 		deta.createClass("Send", "../commands/Send/Send.h");
 		deta.createClass("Key", "../commands/Key/Key.h");
 		deta.createClass("SharePic", "../commands/SharePic/SharePic.h");
 		deta.createClass("Shortcut", "../commands/Shortcut/Shortcut.h");
-		/*std::cout << "OK" << "\n";*/
 		deta.updateHeader();
 	}
 	return 0;

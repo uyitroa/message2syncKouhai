@@ -5,8 +5,8 @@
  *      Author: Raishin
  */
 
-#ifndef SRC_COMMANDS_SHAREPIC_SHORTCUT_H_
-#define SRC_COMMANDS_SHAREPIC_SHORTCUT_H_
+#ifndef SRC_COMMANDS_SHORTCUT_H_
+#define SRC_COMMANDS_SHORTCUT_H_
 
 #include "../../abstracts/ACommand.h"
 #include "../../database/Deta.h"

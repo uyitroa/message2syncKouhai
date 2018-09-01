@@ -33,10 +33,11 @@ void Dora::runCommand(std::string &my_string) {
 		try {
 			this->command->at(index)->run(my_string);
 		} catch (std::exception &e) {
-			Send send;
+			/*Send send;*/
 			std::string error = e.what();
-			std::string a_string = "send \"" + error + "\" to $0762226688";
-			send.run(a_string);
+/*			std::string a_string = "send \"" + error + "\" to $0762226688";
+			send.run(a_string);*/
+			std::cout << error << "\n";
 		}
 	}
 }
