@@ -8,6 +8,10 @@ mysql : https://dev.mysql.com/downloads/mysql/
 
 mysql-connector c++  https://github.com/anhstudios/mysql-connector-cppi && https://dev.mysql.com/downloads/connector/cpp/8.0.html
 
+## Don't do this, not ready
+To install: ./Setup/install.sh
+then ./Setup/setup.sh
+
 ## Creating new command
 
 Folder: src/commands/
