@@ -10,26 +10,20 @@
 
 #include <iostream>
 #include <vector>
-
-#include <mysql.h>
-
-#include <mysql_connection.h>
-#include <cppconn/driver.h>
-#include <cppconn/resultset.h>
-#include <cppconn/statement.h>
+#include <sqlite3.h>
 
 class Deta {
 private:
-	sql::Driver *driver;
-	sql::Connection *con;
-	sql::Statement *stmt;
 
-	const std::string DATABASENAME = "mydatabase";
-	const std::string NODATABASE = "Unknown database '" + this->DATABASENAME + "'";
-	const std::string NOFIELDAMOUNT = " Table '" + this->DATABASENAME + ".amount' doesn't exist";
+	sqlite3 *db;
+	std::string path;
+	std::string databasename;
+
+	void exec(const char *cmd);
+	int sizeClass();
 
 public:
-	Deta(std::string address, std::string name, std::string password);
+	Deta(std::string path = "res/data/", std::string databasename = "mydatabase.db");
 /*	Deta();*/
 	virtual ~Deta();
 
@@ -37,10 +31,10 @@ public:
 	void createClass(std::string name, std::string path);
 	void readClass(std::vector<std::string> &names,
 			std::vector<std::string> &paths);
-	void updateClass(std::string table, std::string set, std::string where);
-	void deleteClass(std::string table, std::string where);
+	void updateClass(std::string set, std::string where);
+	void deleteClass(std::string where);
 
-	// save all class to header file classdata.h
+	// save all command class to header file classdata.h
 	void updateHeader();
 
 	void dropDatabase();
@@ -48,14 +42,14 @@ public:
 	// Create and delete table
 	void createTable(std::string column, std::string row);
 	void deleteTable(std::string column);
-	bool columnExist(std::string column);
+	bool tableExist(std::string column);
 
 	// CRUD to table
-	void insertColumn(std::string column, std::string field_name, std::string row);
-	void updateColumn(std::string column, std::string old_row, std::string new_row);
-	sql::ResultSet* readColumn(std::string column, std::string row); // first is always id
-	sql::ResultSet* readAllColumn(std::string column);
-	void deleteColumn(std::string column, std::string row);
+	void insert(std::string column, std::string field_name, std::string values);
+	sqlite3_stmt* read(std::string column, std::string values);
+	sqlite3_stmt* readAll(std::string column);
+	void update(std::string column, std::string old_row, std::string new_row);
+	void remove(std::string column, std::string row);
 };
 
 #endif /* SRC_DATABASE_DETA_H_ */

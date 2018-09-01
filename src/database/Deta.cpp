@@ -7,88 +7,120 @@
 
 #include "Deta.h"
 
-#include <iostream>
 #include <fstream>
 
-#include <cppconn/exception.h>
-#include <cppconn/prepared_statement.h>
+Deta::Deta(std::string path, std::string databasename) {
+	this->path = path;
+	this->databasename = databasename;
 
-Deta::Deta(std::string address, std::string name, std::string password) {
-	this->driver = get_driver_instance();
-	this->con = driver->connect(address, name, password);
-	this->stmt = this->con->createStatement();
-	try {
-		con->setSchema(this->DATABASENAME);
-		std::cout << "Connected" << "\n";
+	std::string name = path + databasename;
+	int rc = sqlite3_open(name.c_str(), &db);
 
-	} catch (sql::SQLException &e) {
-		// if the database is not created
-		if(e.what() == this->NODATABASE) {
-			stmt->execute("CREATE DATABASE " + this->DATABASENAME);
-			con->setSchema(this->DATABASENAME);
-			stmt->execute("CREATE TABLE classes (id INT NOT NULL AUTO_INCREMENT, name VARCHAR(40) UNIQUE, path VARCHAR(200), created DATE, PRIMARY KEY(id))");
-
-			// check if column amount exist for readClass, which need a vector, and if we know already the amount, no need for push_back();
-			stmt->execute("CREATE TABLE classes_amount (id INT NOT NULL AUTO_INCREMENT, amount INT, PRIMARY KEY(id))");
-			stmt->execute("INSERT INTO classes_amount (amount) VALUES (0)");
-		} else {
-			std::cout << "ERROR " << e.what() << "\n";
-		}
+	// if error
+	if(rc) {
+		sqlite3_errmsg(db);
 	}
+
+	if(!tableExist("classes")) {
+		std::string command;
+
+		// table stores command and command path. Then write it to classdata.h
+		command = "CREATE TABLE classes(id INT NOT NULL PRIMARY KEY, name VARCHAR(100) NOT NULL UNIQUE, path VARCHAR(100) NOT NULL)";
+		this->exec(command.c_str());
+
+		command = "CREATE TABLE classes_amount(id INT NOT NULL PRIMARY KEY, amount INT NOT NULL)";
+		this->exec(command.c_str());
+
+		// start with zero command
+		command = "INSERT INTO classes_amount(id, amount) VALUES (1, 0)";
+		this->exec(command.c_str());
+	}
+
 
 }
 
 Deta::~Deta() {
-	std::cout << "Deleting deta" << "\n";
-	delete this->con;
-	delete this->stmt;
+	sqlite3_close(db);
+	/*dropDatabase();*/
 }
 
-void Deta::createClass(std::string name, std::string path) {
-	try {
-		stmt->execute("INSERT INTO classes (name, path, created) VALUES ('" + name + "', '" + path + "', NOW())");
-		this->updateClass("classes_amount", "amount = amount + 1", "id = 1");
-	} catch (sql::SQLException &e) {
-		std::cout << name << " already exists" << "\n";
+
+/*
+ * PRIVATE METHOD
+ */
+void Deta::exec(const char* command) {
+	if(sqlite3_exec(db, command, NULL, NULL, NULL)) {
+		std::cout << command << "\n";
+		std::cout << sqlite3_errmsg(db) << "\n";
+		throw std::string("sql error");
 	}
+}
+
+/*
+ * The number of command in database
+ */
+int Deta::sizeClass() {
+	sqlite3_stmt *stmt;
+	std::string command = "SELECT amount from classes_amount";
+
+	sqlite3_prepare(db, command.c_str(), -1, &stmt, NULL);
+
+	sqlite3_step(stmt);
+	char *result = (char *) sqlite3_column_text(stmt, 0);
+	int size = *result - 48; // result is a char, we want an int, so convert char value to int
+
+	sqlite3_finalize(stmt);
+
+	return size;
+}
+
+/*
+ * CRUD CLASS
+ */
+void Deta::createClass(std::string name, std::string path) {
+	int size = sizeClass();
+	std::string command = "INSERT INTO classes(id, name, path) values (" + std::to_string(size + 1) + ", '" + name + "', '" + path + "')";
+	this->exec(command.c_str());
+	this->update("classes_amount", std::string("amount = ") + std::to_string(size), "amount=amount+1");
 }
 
 void Deta::readClass(std::vector<std::string>& names,
-	std::vector<std::string>& paths) {
-	sql::ResultSet *res;
+		std::vector<std::string>& paths) {
 
-	res = stmt->executeQuery("SELECT amount from classes_amount");
-	res->next();
-	int size = 0;
-	size = res->getInt(1);
+	sqlite3_stmt *stmt;
 
+	int size = sizeClass();
 	names.resize(size);
-	paths.resize(size);
-/*	std::cout << size << "\n";*/
+	paths.reserve(size);
 
-	sql::ResultSet *result_set = stmt->executeQuery("SELECT * from classes");
-	int index = 0;
-	while(result_set->next()) {
-		names[index] = result_set->getString(2);
-		paths[index] = result_set->getString(3);
-		std::cout << names[index] << "\n";
-		index++;
+	std::string  command = "SELECT * from classes";
+	sqlite3_prepare(db, command.c_str(), -1, &stmt, NULL);
+	sqlite3_step(stmt);
+
+	for(int index = 0; sqlite3_column_text(stmt, 0) != NULL; index++) { //add until the end of the table
+		names[index] = std::string((char*) sqlite3_column_text(stmt, 1));
+		paths[index] = std::string((char*) sqlite3_column_text(stmt, 2));
+		sqlite3_step(stmt);
 	}
 
-	delete res;
-	delete result_set;
+	sqlite3_finalize(stmt);
 }
 
-void Deta::updateClass(std::string table, std::string set, std::string where) {
-	stmt->execute("UPDATE " + table + " SET " + set + " WHERE " + where);
+void Deta::updateClass(std::string set, std::string where) {
+	std::string command = std::string("UPDATE classes SET ") + set;
+	command += std::string(" WHERE ") + where;
+
+	this->exec(command.c_str());
 }
 
-void Deta::deleteClass(std::string table, std::string where) {
-	stmt->execute("DELETE FROM " + table + " WHERE " + where);
+void Deta::deleteClass(std::string where) {
+	std::string command = std::string("DELETE FROM classes WHERE ") + where;
+	this->exec(command.c_str());
 }
 
-/* write all class in header classdata.h
- * to store class data */
+/*
+ * WRITE COMMAND IN classdata.h
+ */
 void Deta::updateHeader() {
 	std::vector<std::string> names;
 	std::vector<std::string> paths;
@@ -120,51 +152,75 @@ void Deta::updateHeader() {
 }
 
 void Deta::dropDatabase() {
-	stmt->execute("DROP DATABASE " + this->DATABASENAME);
+	/*this->exec("DETACH DATABASE main");*/
+	std::string command = std::string("rm ") + path + databasename;
+	system(command.c_str());
 }
 
 
+/*
+ * CRUD FOR COMMAND
+ */
 void Deta::createTable(std::string column, std::string row) {
-	stmt->execute("CREATE TABLE " + column + "(id INT NOT NULL AUTO_INCREMENT, " + row + ", PRIMARY KEY (id))");
+	std::string command = "CREATE TABLE " + column + "(" + row + ", id INT NOT NULL AUTOINCREMENT PRIMARY KEY)";
+	this->exec(command.c_str());
 }
+
 void Deta::deleteTable(std::string column) {
-	stmt->execute("DROP TABLE " + column);
+	std::string command = "DROP TABLE " + column;
+	this->exec(command.c_str());
+}
+
+bool Deta::tableExist(std::string column) {
+	sqlite3_stmt *stmt;
+	std::string command = "SELECT name FROM sqlite_master WHERE type='table' AND name='" + column + "'";
+
+	sqlite3_prepare( db, command.c_str(), -1, &stmt, NULL );
+	sqlite3_step(stmt);
+
+	bool exist = !(sqlite3_column_text(stmt, 0) == NULL);
+
+	sqlite3_finalize(stmt);
+	return exist;
+
 }
 
 
-bool Deta::columnExist(std::string column) {
-	sql::ResultSet *res = stmt->executeQuery("SHOW TABLES LIKE '" + column + "';");
-	bool empty = false;
-	if(res->next())
-		empty = true;
-	delete res;
-	return empty;
+/*
+ * CRUD TO TABLE
+ */
+void Deta::insert(std::string column, std::string field_name, std::string values) {
+	std::string command = "INSERT INTO " + column + " (" + field_name + ") VALUES (" + values + ")";
+	this->exec(command.c_str());
 }
 
-
-void Deta::insertColumn(std::string column, std::string field_name , std::string row) {
-	stmt->execute("INSERT INTO " + column + " (" + field_name + ")" +" VALUES (" + row + ")");
-}
-
-void Deta::updateColumn(std::string column, std::string old_row,
+void Deta::update(std::string column, std::string old_row,
 		std::string new_row) {
-	stmt->execute("UPDATE " + column + " SET " + new_row + " WHERE " + old_row);
+	std::string command = "UPDATE " + column + " SET " + new_row + " WHERE " + old_row;
+	this->exec(command.c_str());
 }
 
-sql::ResultSet* Deta::readColumn(std::string column, std::string row) {
-	sql::ResultSet *res;
-	res = stmt->executeQuery("SELECT * FROM " + column + " WHERE " + row);
-	return res;
+sqlite3_stmt* Deta::read(std::string column, std::string values) {
+	std::string command = std::string("SELECT * FROM ") + column;
+	command += std::string(" WHERE ") + values;
+
+	sqlite3_stmt *stmt;
+	sqlite3_prepare(db, command.c_str(), -1, &stmt, NULL);
+
+	return stmt;
 }
 
-//delete sql::ResultSet after !!
-sql::ResultSet* Deta::readAllColumn(std::string column) {
-	sql::ResultSet *res;
-	res = stmt->executeQuery("SELECT * FROM " + column);
-	return res;
+sqlite3_stmt* Deta::readAll(std::string column) {
+	std::string command = std::string("SELECT * FROM ") + column;
+
+	sqlite3_stmt *stmt;
+	sqlite3_prepare(db, command.c_str(), -1, &stmt, NULL);
+
+	return stmt;
+
 }
 
-void Deta::deleteColumn(std::string column, std::string row) {
-	stmt->execute("DELETE FROM " + column + " WHERE " + row);
+void Deta::remove(std::string column, std::string row) {
+	std::string command = "DELETE FROM " + column + " WHERE " + row;
+	this->exec(command.c_str());
 }
-
