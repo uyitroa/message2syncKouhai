@@ -44,7 +44,7 @@ std::string Koneku::readFile(std::string file_name) {
 }
 
 std::string Koneku::update() {
-	system("src/app/baskup.sh");
+	system("src/Kouhai/updater/baskup.sh");
 	std::string my_string = this->readFile(this->file_name);
 	my_string = my_string.substr(0, my_string.size() - 1);
 	return my_string;

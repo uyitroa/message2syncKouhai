@@ -1,9 +1,9 @@
 #include <iostream>
 
-#include "../core/Koneku.h"
-#include "../database/Deta.h"
+#include "Kouhai/core/Koneku.h"
+#include "Kouhai/database/Deta.h"
 
-int main() {
+void controller() {
 	int choice;
 	std::cout << "1.Run   2.Add class: ";
 	std::cin >> choice;
@@ -19,6 +19,17 @@ int main() {
 		deta.createClass("SharePic", "../commands/SharePic/SharePic.h");
 		deta.createClass("Shortcut", "../commands/Shortcut/Shortcut.h");
 		deta.updateHeader();
+	}
+}
+
+void commander() {}
+
+int main() {
+	int type = 1;
+	if(type == 1) {
+		controller();
+	} else if (type == 2) {
+		commander();
 	}
 	return 0;
 }
