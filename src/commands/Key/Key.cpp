@@ -10,14 +10,9 @@
 #include <fstream>
 
 Key::Key()
-	: ACommand("key"){
-	// TODO Auto-generated constructor stub
+	: ACommand("key") {}
 
-}
-
-Key::~Key() {
-	// TODO Auto-generated destructor stub
-}
+Key::~Key() {}
 
 void Key::run(std::string& my_string) {
 	my_string = my_string.substr(4, my_string.size()); //remove world key from input
