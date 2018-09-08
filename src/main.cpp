@@ -11,7 +11,7 @@ void controller() {
 	if(choice == 1) {
 		Koneku my_app;
 		my_app.launch();
-	} else {
+	}/* else {
 		Deta deta;
 		deta.createClass("Bash", "../commands/Bash/Bash.h");
 		deta.createClass("Send", "../commands/Send/Send.h");
@@ -19,7 +19,7 @@ void controller() {
 		deta.createClass("SharePic", "../commands/SharePic/SharePic.h");
 		deta.createClass("Shortcut", "../commands/Shortcut/Shortcut.h");
 		deta.updateHeader();
-	}
+	}*/
 }
 
 void commander() {}
