@@ -23,7 +23,7 @@ private:
 	int sizeClass();
 
 public:
-	Deta(std::string path = "res/data/", std::string databasename = "mydatabase.db");
+	Deta(std::string path = "res/data/", std::string databasename = "mydatabase.db"); // default values
 /*	Deta();*/
 	virtual ~Deta();
 
@@ -34,7 +34,10 @@ public:
 	void updateClass(std::string set, std::string where);
 	void deleteClass(std::string where);
 
-	// save all command class to header file classdata.h
+	/*
+	 * save all command class to header file classdata.h
+	 * store all command in an vector using object slicing technique
+	 */
 	void updateHeader();
 
 	void dropDatabase();
@@ -44,7 +47,9 @@ public:
 	void deleteTable(std::string column);
 	bool tableExist(std::string column);
 
-	// CRUD to table
+	/*
+	 * Allow user to manage data that they want to store
+	 */
 	void insert(std::string column, std::string field_name, std::string values);
 	sqlite3_stmt* read(std::string column, std::string values);
 	sqlite3_stmt* readAll(std::string column);

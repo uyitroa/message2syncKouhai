@@ -28,6 +28,10 @@ Deta::Deta(std::string path, std::string databasename) {
 		command = "CREATE TABLE classes(id INT NOT NULL PRIMARY KEY, name VARCHAR(100) NOT NULL UNIQUE, path VARCHAR(100) NOT NULL)";
 		this->exec(command.c_str());
 
+		/*
+		 * We also need to keep track of the amonut of the commands.
+		 * So we need to create a table that store an int which represent the amount of commands.
+		 */
 		command = "CREATE TABLE classes_amount(id INT NOT NULL PRIMARY KEY, amount INT NOT NULL)";
 		this->exec(command.c_str());
 
@@ -48,6 +52,8 @@ Deta::~Deta() {
 /*
  * PRIVATE METHOD
  */
+
+/* Execute a sqlite3 commands and if there is any error, throw a std::string error */
 void Deta::exec(const char* command) {
 	if(sqlite3_exec(db, command, NULL, NULL, NULL)) {
 		std::cout << command << "\n";
@@ -76,6 +82,7 @@ int Deta::sizeClass() {
 
 /*
  * CRUD CLASS
+ * To add/remove/update/read command like bash ls or sharepic
  */
 void Deta::createClass(std::string name, std::string path) {
 	int size = sizeClass();
@@ -118,8 +125,11 @@ void Deta::deleteClass(std::string where) {
 	this->exec(command.c_str());
 }
 
+
 /*
  * WRITE COMMAND IN classdata.h
+ * To do that, we need to create a header file.
+ * So we will need ifndef, define, .... just like a normal header file
  */
 void Deta::updateHeader() {
 	std::vector<std::string> names;
@@ -136,10 +146,13 @@ void Deta::updateHeader() {
 	std::string header_end = "\n#endif";
 	std::string header_content = "\n\nstd::vector<ACommand*> command_list = {";
 
+	//object slicing technique. All commands are derived class from ACommand class
+
 	for(int x = 0; x < names.size(); x++) {
-		header_content += "new " + names[x] + ", ";
+		header_content += "new " + names[x] + ", "; // new element in vector
 		header_start += "\n#include \"" + paths[x] +"\"";
 	}
+
 	header_content = header_content.substr(0, header_content.size() - 2); // delete the last ", "
 	header_content += "};\n";
 	header_content = header_start + header_content + header_end;
@@ -162,6 +175,9 @@ void Deta::dropDatabase() {
  * CRUD FOR COMMAND
  */
 void Deta::createTable(std::string column, std::string row) {
+	/*
+	 * the last element is always the id
+	 */
 	std::string command = "CREATE TABLE " + column + "(" + row + ", id INT NOT NULL AUTOINCREMENT PRIMARY KEY)";
 	this->exec(command.c_str());
 }

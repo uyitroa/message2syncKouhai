@@ -35,7 +35,7 @@ std::string Koneku::readFile(std::string file_name) {
 	file.seekg(-1, file.end); // go the last line
 	char c = '\0';
 
-	for(int x = -2; c != '\n'; x--) { // loop until \n
+	for(int x = -2; c != '\n'; x--) { // loop until \n which means the previous line. We only need the last line
 		file.seekg(x, file.end);
 		result = c + result;
 		c = file.get();
@@ -43,18 +43,21 @@ std::string Koneku::readFile(std::string file_name) {
 	return result;
 }
 
+/*
+ * read file and get the last message
+ */
 std::string Koneku::update() {
-	system("src/Kouhai/updater/baskup.sh");
+	system("src/Kouhai/updater/baskup.sh"); // run the updater. Il will read the database and write new message to the file.
 	std::string my_string = this->readFile(this->file_name);
-	my_string = my_string.substr(0, my_string.size() - 1);
+	my_string = my_string.substr(0, my_string.size() - 1); // remove the \n of the message
 	return my_string;
 }
 
 // check if it is the user messages or its own message
 bool Koneku::filterMsg(std::string& my_string) {
-	if(my_string.substr(0, 2) == "0|") { // 0| means user messages, and 1| means its own message
-		my_string = my_string.substr(2, my_string.size() - 3);
-		std::cout << my_string << "\n";
+	if(my_string.substr(0, 2) == "0|") { // 0| means controller message, and 1| means its own message
+		my_string = my_string.substr(2, my_string.size() - 3); // remove those symbol since we know that's the controller message
+		/*std::cout << my_string << "\n";*/
 		return true;
 
 	} else {
@@ -65,17 +68,19 @@ bool Koneku::filterMsg(std::string& my_string) {
 // main method
 void Koneku::launch() {
 	std::string current_string = this->update();
-	Dora dora;
+	Dora dora; // dora is the manager of all commands. From the input, it will determine which command to run
 
 	std::cout << "Setup finished" << "\n";
 
-	while(current_string != this->EXIT_COMMAND) {
+	while(current_string != this->EXIT_COMMAND) { // check if the order is not the exit
 		std::string new_string = this->update();
+
 		if(!(new_string == current_string)) {
 			current_string = new_string;
 			if(this->filterMsg(new_string))
 				dora.runCommand(new_string);
 		}
+
 		sleep(this->wait);
 	}
 }

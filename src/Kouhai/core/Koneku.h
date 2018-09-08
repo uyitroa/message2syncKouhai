@@ -17,21 +17,32 @@ private:
 	std::string file_name;
 	int wait;
 
+	/*
+	 * readFile, the file store the conversation of the controller and the computer
+	 */
 	std::string readFile(std::string file_name);
 public:
 	Koneku(std::string name, int time_wait);
 	Koneku();
 
 	~Koneku();
-
+	/*
+	 * read file and get the last message
+	 */
 	std::string update();
 
-	/*because the receive message is format : 1|message|
-	so we need to remove the '1|' and the last '|'*/
+	/*
+	 * because the receive message is format : 1|message|
+	 * so we need to remove the '1|' and the last '|'
+	 * 1| reprensent computer, and 0| represent the controller
+	 */
 	bool filterMsg(std::string &my_string);
 
 	void launch();
 
+	/*
+	 * object slicing use dynamic memory, so we need to prevent memory leak
+	 */
 	void del(std::vector<ACommand*> &command);
 
 };

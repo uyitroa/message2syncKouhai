@@ -13,15 +13,26 @@
 class ACommand {
 protected:
 	std::string prefix;
+	std::string information;
 
 public:
 	ACommand(std::string prefix);
+	ACommand(std::string prefix, std::string information);
 	virtual ~ACommand();
 
-	// run command
+	/*
+	 * "main" method
+	 * It will be called when the controller need the command
+	 * The whole input will be passed by reference parameter
+	 */
 	virtual void run(std::string &my_string) = 0;
 
 	virtual std::string& getPrefix();
+
+	/*
+	 * This method will be called when the controller send "help"
+	 */
+	virtual std::string& help();
 };
 
 #endif /* SRC_ABSTRACTS_ACOMMAND_H_ */

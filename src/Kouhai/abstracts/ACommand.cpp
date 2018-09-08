@@ -8,6 +8,12 @@
 #include "ACommand.h"
 ACommand::ACommand(std::string prefix) {
 	this->prefix = prefix;
+	this->information = prefix + " to run";
+}
+
+ACommand::ACommand(std::string prefix, std::string information) {
+	this->prefix = prefix;
+	this->information = information;
 }
 
 ACommand::~ACommand() {
@@ -18,3 +24,8 @@ ACommand::~ACommand() {
 std::string& ACommand::getPrefix() {
 	return this->prefix;
 }
+
+std::string& ACommand::help() {
+	return information;
+}
+
