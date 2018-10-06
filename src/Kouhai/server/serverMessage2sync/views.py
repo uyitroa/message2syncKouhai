@@ -1,5 +1,6 @@
 from django.views.decorators.csrf import csrf_exempt
 from django.http import JsonResponse
+import json
 import os
 
 
@@ -21,7 +22,8 @@ def receive(request):
 		file_path += path_name
 
 		myfile = open(file_path, "a")
-		myfile.write(request.POST.get('body', ''))
+		data = json.loads(request.body)
+		myfile.write(data + "\n")
 
 		return JsonResponse({'update': True})
 
