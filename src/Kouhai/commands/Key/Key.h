@@ -5,8 +5,8 @@
  *      Author: Raishin
  */
 
-#ifndef SRC_COMMANDS_KEY_KEY_H_
-#define SRC_COMMANDS_KEY_KEY_H_
+#ifndef SRC_KOUHAI_COMMANDS_KEY_KEY_H_
+#define SRC_KOUHAI_COMMANDS_KEY_KEY_H_
 
 #include "../../abstracts/ACommand.h"
 

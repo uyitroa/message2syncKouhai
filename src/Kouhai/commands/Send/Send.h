@@ -5,8 +5,8 @@
  *      Author: Raishin
  */
 
-#ifndef SRC_COMMANDS_SEND_H_
-#define SRC_COMMANDS_SEND_H_
+#ifndef SRC_KOUHAI_COMMANDS_SEND_SEND_H_
+#define SRC_KOUHAI_COMMANDS_SEND_SEND_H_
 
 #include <vector>
 

@@ -5,8 +5,8 @@
  *      Author: Raishin
  */
 
-#ifndef SRC_COMMANDS_BASH_H_
-#define SRC_COMMANDS_BASH_H_
+#ifndef SRC_KOUHAI_COMMANDS_BASH_BASH_H_
+#define SRC_KOUHAI_COMMANDS_BASH_BASH_H_
 
 #include "../../abstracts/ACommand.h"
 

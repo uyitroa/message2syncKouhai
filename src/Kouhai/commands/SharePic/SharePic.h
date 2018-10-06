@@ -5,8 +5,8 @@
  *      Author: Raishin
  */
 
-#ifndef SRC_COMMANDS_SHAREPIC_SHAREPIC_H_
-#define SRC_COMMANDS_SHAREPIC_SHAREPIC_H_
+#ifndef SRC_KOUHAI_COMMANDS_SHAREPIC_SHAREPIC_H_
+#define SRC_KOUHAI_COMMANDS_SHAREPIC_SHAREPIC_H_
 
 #include "../../abstracts/ACommand.h"
 class SharePic : public ACommand {

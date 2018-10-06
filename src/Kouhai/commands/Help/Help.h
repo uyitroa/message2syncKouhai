@@ -2,8 +2,8 @@
 // Created by yuitora . on 06/10/2018.
 //
 
-#ifndef MESSAGE2SYNC_HELP_H
-#define MESSAGE2SYNC_HELP_H
+#ifndef SRC_KOUHAI_COMMANDS_HELP_HELP_H
+#define SRC_KOUHAI_COMMANDS_HELP_HELP_H
 
 
 #include "../../abstracts/ACommand.h"
