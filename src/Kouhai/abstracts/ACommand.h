@@ -17,6 +17,7 @@ protected:
 	std::string information;
 
 	void removePrefix(std::string &input);
+
 public:
 	ACommand(std::string prefix);
 	ACommand(std::string prefix, std::string information);
