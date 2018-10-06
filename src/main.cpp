@@ -1,7 +1,9 @@
 #include <iostream>
+#include <fstream>
 
 #include "Kouhai/core/Koneku.h"
 #include "Kouhai/database/Deta.h"
+#include "Kouhai/database/datapath.h"
 
 void controller() {
 	int choice;
@@ -11,7 +13,7 @@ void controller() {
 	if(choice == 1) {
 		Koneku my_app;
 		my_app.launch();
-	}/* else {
+	} else {
 		Deta deta;
 		deta.createClass("Bash", "../commands/Bash/Bash.h");
 		deta.createClass("Send", "../commands/Send/Send.h");
@@ -19,14 +21,20 @@ void controller() {
 		deta.createClass("SharePic", "../commands/SharePic/SharePic.h");
 		deta.createClass("Shortcut", "../commands/Shortcut/Shortcut.h");
 		deta.updateHeader();
-	}*/
+	}
 }
 
 void commander() {}
 
+void runserver() {
+	std::string command = "python3 " + filepath + "src/Kouhai/server/manage.py runserver &";
+	system(command.c_str());
+}
+
 int main() {
 	int type = 1;
 	if(type == 1) {
+		runserver();
 		controller();
 	} else if (type == 2) {
 		commander();
