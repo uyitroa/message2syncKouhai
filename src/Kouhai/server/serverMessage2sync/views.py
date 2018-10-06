@@ -13,7 +13,7 @@ def receive(request):
 		file_path = file_path[0:len(file_path) - len(file_name)]
 
 		# remove folder name
-		folder_name = "serverMessage2sync/"
+		folder_name = "src/Kouhai/server/serverMessage2sync/"
 		file_path = file_path[0:len(file_path) - len(folder_name)]
 
 		# add folder
