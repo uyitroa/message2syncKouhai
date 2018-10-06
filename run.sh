@@ -1,2 +1,2 @@
-g++ -std=c++11 -l sqlite3 src/Kouhai/commands/*/*.cpp src/main.cpp src/*/*/*.cpp -o ~/main.out
+g++ -std=c++11 -lsqlite3 -lboost_system src/Kouhai/commands/*/*.cpp src/main.cpp src/*/*/*.cpp -o ~/main.out
 ~/main.out
