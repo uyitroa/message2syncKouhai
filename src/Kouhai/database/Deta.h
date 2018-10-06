@@ -5,8 +5,8 @@
  *      Author: Raishin
  */
 
-#ifndef SRC_DATABASE_DETA_H_
-#define SRC_DATABASE_DETA_H_
+#ifndef SRC_KOUHAI_DATABASE_DETA_H_
+#define SRC_KOUHAI_DATABASE_DETA_H_
 
 #include <iostream>
 #include <vector>

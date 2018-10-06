@@ -5,8 +5,8 @@
  *      Author: Raishin
  */
 
-#ifndef SRC_ABSTRACTS_ACOMMAND_H_
-#define SRC_ABSTRACTS_ACOMMAND_H_
+#ifndef SRC_KOUHAI_ABSTRACTS_ACOMMAND_H_
+#define SRC_KOUHAI_ABSTRACTS_ACOMMAND_H_
 
 #include <iostream>
 #include "../database/datapath.h"

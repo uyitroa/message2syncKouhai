@@ -1,5 +1,5 @@
-#ifndef SRC_CORE_DORA_H_
-#define SRC_CORE_DORA_H_
+#ifndef SRC_KOUHAI_CORE_DORA_H_
+#define SRC_KOUHAI_CORE_DORA_H_
 #include <iostream>
 #include <vector>
 #include "../abstracts/ACommand.h"

@@ -5,11 +5,11 @@
  *      Author: Raishin
  */
 
-#ifndef SRC_APP_KONEKU_H_
-#define SRC_APP_KONEKU_H_
+#ifndef SRC_KOUHAI_CORE_KONEKU_H_
+#define SRC_KOUHAI_CORE_KONEKU_H_
 
 #include <iostream>
-#include "../abstracts/ACommand.h"
+#include "../database/classdata.h"
 
 class Koneku {
 private:
