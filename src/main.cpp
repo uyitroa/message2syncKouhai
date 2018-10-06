@@ -1,6 +1,7 @@
 #include <iostream>
 #include <fstream>
 
+#include "Senpai/client/SendRequest.h"
 #include "Kouhai/core/Koneku.h"
 #include "Kouhai/database/Deta.h"
 #include "Kouhai/database/datapath.h"
@@ -24,19 +25,23 @@ void controller() {
 	}
 }
 
-void commander() {}
+void commander() {
+	SendRequest sendRequest;
+
+	std::string json = R"({"body" : "Hello World"})";
+	sendRequest.sendpost(json);
+}
 
 void runserver() {
 	std::string command = "python3 " + filepath + "src/Kouhai/server/manage.py runserver &";
 	system(command.c_str());
 }
 
-int main() {
-	int type = 1;
-	if(type == 1) {
+int main(int argc, char *argv[]) {
+	if(argv[1][0] == '1') {
 		runserver();
 		controller();
-	} else if (type == 2) {
+	} else if (argv[1][0] == '2') {
 		commander();
 	}
 	return 0;
