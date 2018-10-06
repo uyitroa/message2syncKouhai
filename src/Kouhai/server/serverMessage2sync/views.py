@@ -18,14 +18,15 @@ def receive(request):
 		file_path = file_path[0:len(file_path) - len(folder_name)]
 
 		# add folder
-		path_name = "res/line.txt"
+		path_name = "res/data/line.txt"
 		file_path += path_name
-
+		print(request.body)
 		myfile = open(file_path, "a")
 		data = json.loads(request.body)
-		myfile.write(data + "\n")
+		myfile.write(data['body'] + "\n")
 
 		return JsonResponse({'update': True})
 
 	except Exception as e:
+		print(e)
 		return JsonResponse({'update': False})
