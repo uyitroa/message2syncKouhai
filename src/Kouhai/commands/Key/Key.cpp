@@ -15,7 +15,7 @@ Key::Key()
 Key::~Key() {}
 
 void Key::run(std::string& my_string) {
-	my_string = my_string.substr(4, my_string.size()); //remove world key from input
+	removePrefix(my_string);
 
 	std::string cmd = "python " + filepath + "src/commands/Key/key.py '" + my_string + "'";
 	std::cout << cmd << "\n";

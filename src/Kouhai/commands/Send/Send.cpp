@@ -43,8 +43,7 @@ std::vector<std::string> Send::extract(std::string& my_string) {
  * Input: send "hello world" to 123456789
  */
 void Send::run(std::string& my_string) {
-	// remove send from the command
-	my_string = my_string.substr(5, my_string.size());
+	removePrefix(my_string);
 
 	std::vector<std::string> string_list = this->extract(my_string);
 	std::string command = "osascript " + filepath + "src/Kouhai/commands/Send/send.scpt " + string_list[1] + " " + string_list[0] + " &";

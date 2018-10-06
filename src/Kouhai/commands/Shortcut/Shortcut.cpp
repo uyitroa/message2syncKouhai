@@ -59,7 +59,8 @@ void Shortcut::deleteSc(std::string alias, Deta &deta) {
 
 
 void Shortcut::run(std::string& my_string) {
-	my_string = my_string.substr(3, my_string.size()); // remove sc from the input
+	removePrefix(my_string);
+
 	Deta deta;
 	if(!deta.tableExist("shortcuts")) {
 		std::cout << "Creating table" << "\n";

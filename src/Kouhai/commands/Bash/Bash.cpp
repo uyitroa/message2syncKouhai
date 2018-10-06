@@ -32,8 +32,7 @@ std::string Bash::exec(const char* cmd) {
 }
 
 void Bash::run(std::string &my_string) {
-	// remove "bash" from the string to execute shell command
-	my_string = my_string.substr(5, my_string.size());
+	removePrefix(my_string);
 
 	std::string result = exec(my_string.c_str());
 	Send send;

@@ -29,3 +29,7 @@ std::string& ACommand::help() {
 	return information;
 }
 
+void ACommand::removePrefix(std::string &input) {
+	input = input.substr(prefix.size() + 1, input.size());
+}
+
