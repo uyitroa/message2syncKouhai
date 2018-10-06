@@ -35,7 +35,7 @@ std::string SharePic::exec(const char *cmd) {
 
 void SharePic::run(std::string& my_string) {
 	my_string = my_string.substr(9, my_string.size());
-	std::string command = "./src/commands/SharePic/imgur.sh " + my_string;
+	std::string command = "." + filepath + "/src/commands/SharePic/imgur.sh " + my_string;
 	std::string result = exec(command.c_str());
 	result = "send \"" + result +  "\" to $0762226688";
 	Send send;

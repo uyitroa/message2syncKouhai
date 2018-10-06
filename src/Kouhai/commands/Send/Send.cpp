@@ -47,7 +47,7 @@ void Send::run(std::string& my_string) {
 	my_string = my_string.substr(5, my_string.size());
 
 	std::vector<std::string> string_list = this->extract(my_string);
-	std::string command = "osascript src/commands/Send/send.scpt " + string_list[1] + " " + string_list[0] + " &";
+	std::string command = "osascript " + filepath + "src/Kouhai/commands/Send/send.scpt " + string_list[1] + " " + string_list[0] + " &";
 	system(command.c_str());
 }
 

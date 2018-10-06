@@ -9,11 +9,13 @@
 #define SRC_ABSTRACTS_ACOMMAND_H_
 
 #include <iostream>
+#include "../database/datapath.h"
 
 class ACommand {
 protected:
 	std::string prefix;
 	std::string information;
+
 
 public:
 	ACommand(std::string prefix);

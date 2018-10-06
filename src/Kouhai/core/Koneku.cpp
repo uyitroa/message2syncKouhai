@@ -11,6 +11,7 @@
 
 #include "Koneku.h"
 #include "../manager/Dora.h"
+#include "../database/datapath.h"
 
 Koneku::Koneku(std::string file_name, int wait) {
 	this->file_name = file_name;
@@ -19,7 +20,7 @@ Koneku::Koneku(std::string file_name, int wait) {
 }
 
 Koneku::Koneku() {
-	 this->file_name = "res/data/line.txt";
+	 this->file_name = filepath + "res/data/line.txt";
 	 this->wait = 3;
 }
 Koneku::~Koneku() {
@@ -47,7 +48,8 @@ std::string Koneku::readFile(std::string file_name) {
  * read file and get the last message
  */
 std::string Koneku::update() {
-	system("src/Kouhai/updater/baskup.sh"); // run the updater. Il will read the database and write new message to the file.
+	std::string file = filepath + "src/Kouhai/updater/baskup.sh";
+	system(file.c_str()); // run the updater. Il will read the database and write new message to the file.
 	std::string my_string = this->readFile(this->file_name);
 	my_string = my_string.substr(0, my_string.size() - 1); // remove the \n of the message
 	return my_string;
@@ -55,9 +57,8 @@ std::string Koneku::update() {
 
 // check if it is the user messages or its own message
 bool Koneku::filterMsg(std::string& my_string) {
-	if(my_string.substr(0, 2) == "0|") { // 0| means controller message, and 1| means its own message
+	if(my_string.substr(0, 2) == "1|") { // 0| means controller message, and 1| means its own message
 		my_string = my_string.substr(2, my_string.size() - 3); // remove those symbol since we know that's the controller message
-		/*std::cout << my_string << "\n";*/
 		return true;
 
 	} else {
@@ -76,6 +77,7 @@ void Koneku::launch() {
 		std::string new_string = this->update();
 
 		if(!(new_string == current_string)) {
+			std::cout << new_string << "\n";
 			current_string = new_string;
 			if(this->filterMsg(new_string))
 				dora.runCommand(new_string);
