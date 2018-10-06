@@ -24,7 +24,7 @@ Koneku::Koneku() {
 	 this->wait = 3;
 }
 Koneku::~Koneku() {
-	// TODO Auto-generated destructor stub
+	del(command_list);
 }
 
 // read the last message sent.
@@ -85,5 +85,10 @@ void Koneku::launch() {
 
 		sleep(this->wait);
 	}
+}
+
+void Koneku::del(std::vector<ACommand *> &command) {
+	for (auto &element : command)
+		delete element;
 }
 
