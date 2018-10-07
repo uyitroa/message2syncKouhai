@@ -3,6 +3,10 @@
 A program which do everythin through imessage.
 It lets you control your pc with phone
 
+## Requirement
+- npm
+- brew
+
 ## Setup
 ```
 ./setup
