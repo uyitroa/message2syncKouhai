@@ -13,9 +13,9 @@
 #include "../manager/Dora.h"
 #include "../database/datapath.h"
 
-Koneku::Koneku(std::string file_name, int wait) {
-	this->file_name = file_name;
-	this->wait  = wait;
+Koneku::Koneku(std::string file_name, unsigned int wait) {
+	this->file_name = std::move(file_name);
+	this->wait = wait;
 
 }
 
@@ -23,25 +23,17 @@ Koneku::Koneku() {
 	 this->file_name = filepath + "res/data/line.txt";
 	 this->wait = 3;
 }
+
 Koneku::~Koneku() {
 	del(command_list);
 }
 
 // read the last message sent.
 std::string Koneku::readFile(std::string file_name) {
-	std::string result = "";
-	std::ifstream file;
-
-	file.open(file_name);
-	file.seekg(-1, file.end); // go the last line
-	char c = '\0';
-
-	for(int x = -2; c != '\n'; x--) { // loop until \n which means the previous line. We only need the last line
-		file.seekg(x, file.end);
-		result = c + result;
-		c = file.get();
-	}
-	return result;
+	std::ifstream file(file_name);
+	std::string content( (std::istreambuf_iterator<char>(file) ),
+	                     (std::istreambuf_iterator<char>()    ) );
+	return content;
 }
 
 /*

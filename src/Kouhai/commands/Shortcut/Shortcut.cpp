@@ -6,14 +6,12 @@
  */
 
 #include "Shortcut.h"
-
-
 #include <fstream>
 
 #include "../Send/Send.h"
 
 Shortcut::Shortcut()
-	: ACommand("sc") {
+	: ACommand("sc","To create:  sc alias:`real command`->`shortcut`\nTo delete:  sc delete() `shortcut`") {
 	// TODO Auto-generated constructor stub
 
 }
@@ -42,15 +40,16 @@ void Shortcut::create(std::string input, Deta &deta) {
 void Shortcut::connectToManager(std::string &input, Deta &deta) {
 	sqlite3_stmt *stmt = deta.read("shortcuts", "alias = '" + input + "'");
 	sqlite3_step(stmt);
-	std::string real = std::string((char*) sqlite3_column_text(stmt, 0));
-	real = "0|" + real + "|\n";
-
-	std::ofstream out;
-	out.open("res/data/line.txt", std::ios::app);
-	out << real;
-	out.close();
-
+	std::string real = std::string((char*) sqlite3_column_text(stmt, 1));
 	sqlite3_finalize(stmt);
+
+	real = "1|" + real;
+	std::string path = filepath + "res/data/line.txt";
+
+	std::ofstream myfile;
+	myfile.open(path);
+	myfile << real << "\n";
+	myfile.close();
 }
 
 void Shortcut::deleteSc(std::string alias, Deta &deta) {

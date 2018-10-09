@@ -26,7 +26,7 @@ std::string& ACommand::getPrefix() {
 }
 
 std::string& ACommand::help() {
-	return information;
+	return this->information;
 }
 
 void ACommand::removePrefix(std::string &input) {

@@ -55,7 +55,7 @@ Deta::~Deta() {
 
 /* Execute a sqlite3 commands and if there is any error, throw a std::string error */
 void Deta::exec(const char* command) {
-	if(sqlite3_exec(db, command, NULL, NULL, NULL)) {
+	if(sqlite3_exec(db, command, nullptr, nullptr, nullptr)) {
 		std::cout << command << "\n";
 		std::cout << sqlite3_errmsg(db) << "\n";
 		throw std::string("sql error");
@@ -69,7 +69,7 @@ int Deta::sizeClass() {
 	sqlite3_stmt *stmt;
 	std::string command = "SELECT amount from classes_amount";
 
-	sqlite3_prepare(db, command.c_str(), -1, &stmt, NULL);
+	sqlite3_prepare(db, command.c_str(), -1, &stmt, nullptr);
 
 	sqlite3_step(stmt);
 	char *result = (char *) sqlite3_column_text(stmt, 0);
@@ -101,10 +101,10 @@ void Deta::readClass(std::vector<std::string>& names,
 	paths.reserve(size);
 
 	std::string  command = "SELECT * from classes";
-	sqlite3_prepare(db, command.c_str(), -1, &stmt, NULL);
+	sqlite3_prepare(db, command.c_str(), -1, &stmt, nullptr);
 	sqlite3_step(stmt);
 
-	for(int index = 0; sqlite3_column_text(stmt, 0) != NULL; index++) { //add until the end of the table
+	for(int index = 0; sqlite3_column_text(stmt, 0) != nullptr; index++) { //add until the end of the table
 		names[index] = std::string((char*) sqlite3_column_text(stmt, 1));
 		paths[index] = std::string((char*) sqlite3_column_text(stmt, 2));
 		sqlite3_step(stmt);
@@ -144,7 +144,7 @@ void Deta::updateHeader() {
 			"\n\n#include \"../abstracts/ACommand.h\"";
 
 	std::string header_end = "\n#endif";
-	std::string header_content = "\n\nstd::vector<ACommand*> command_list = {";
+	std::string header_content = "\n\nstatic std::vector<ACommand*> command_list = {";
 
 	//object slicing technique. All commands are derived class from ACommand class
 
@@ -159,7 +159,8 @@ void Deta::updateHeader() {
 
 	// write file
 	std::ofstream myfile;
-	myfile.open("src/database/classdata.h");
+	std::string path = filepath + "src/Kouhai/database/classdata.h";
+	myfile.open(path);
 	myfile << header_content;
 	myfile.close();
 }
@@ -178,7 +179,7 @@ void Deta::createTable(std::string column, std::string row) {
 	/*
 	 * the last element is always the id
 	 */
-	std::string command = "CREATE TABLE " + column + "(" + row + ", id INT NOT NULL AUTOINCREMENT PRIMARY KEY)";
+	std::string command = "CREATE TABLE " + column + "(" + row + ")";
 	this->exec(command.c_str());
 }
 
@@ -221,7 +222,7 @@ sqlite3_stmt* Deta::read(std::string column, std::string values) {
 	command += std::string(" WHERE ") + values;
 
 	sqlite3_stmt *stmt;
-	sqlite3_prepare(db, command.c_str(), -1, &stmt, NULL);
+	sqlite3_prepare(db, command.c_str(), -1, &stmt, nullptr);
 
 	return stmt;
 }
@@ -230,7 +231,7 @@ sqlite3_stmt* Deta::readAll(std::string column) {
 	std::string command = std::string("SELECT * FROM ") + column;
 
 	sqlite3_stmt *stmt;
-	sqlite3_prepare(db, command.c_str(), -1, &stmt, NULL);
+	sqlite3_prepare(db, command.c_str(), -1, &stmt, nullptr);
 
 	return stmt;
 

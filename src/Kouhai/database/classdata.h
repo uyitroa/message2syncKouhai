@@ -10,7 +10,8 @@
 #include "../commands/Key/Key.h"
 #include "../commands/SharePic/SharePic.h"
 #include "../commands/Shortcut/Shortcut.h"
+#include "../commands/Help/Help.h"
 
-static std::vector<ACommand*> command_list = {new Bash, new Send, new Key, new SharePic, new Shortcut};
+static std::vector<ACommand*> command_list = {new Bash, new Send, new Key, new SharePic, new Shortcut, new Help};
 
 #endif

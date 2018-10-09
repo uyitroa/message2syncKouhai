@@ -20,7 +20,7 @@ def receive(request, data):
 		# add folder
 		path_name = "res/data/line.txt"
 		file_path += path_name
-		myfile = open(file_path, "a")
+		myfile = open(file_path, "w")
 		print(file_path, data)
 		myfile.write(data + "\n")
 

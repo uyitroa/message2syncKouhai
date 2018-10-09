@@ -15,14 +15,14 @@ class Koneku {
 private:
 	const std::string EXIT_COMMAND = "1|exit()|";
 	std::string file_name;
-	int wait;
+	unsigned int  wait;
 
 	/*
 	 * readFile, the file store the conversation of the controller and the computer
 	 */
 	std::string readFile(std::string file_name);
 public:
-	Koneku(std::string name, int time_wait);
+	Koneku(std::string name, unsigned int time_wait);
 	Koneku();
 
 	~Koneku();
