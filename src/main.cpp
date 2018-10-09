@@ -1,10 +1,11 @@
 #include <iostream>
 #include <fstream>
 
-#include "Senpai/client/SendRequest.h"
+
 #include "Kouhai/core/Koneku.h"
 #include "Kouhai/database/Deta.h"
 #include "Kouhai/database/datapath.h"
+void input();
 
 void controller() {
 	int choice;
@@ -26,10 +27,7 @@ void controller() {
 }
 
 void commander() {
-	SendRequest sendRequest;
-
-	std::string data = "test";
-	sendRequest.sendpost(data);
+	input();
 }
 
 void runserver() {
