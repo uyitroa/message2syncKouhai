@@ -11,7 +11,7 @@ void input() {
 
 	std::cout << "Send: ";
 	std::getline(std::cin, inputstring);
-
+	inputstring = "1|" + inputstring;
 	sendRequest.sendpost(inputstring);
 
 }

@@ -6,14 +6,14 @@
  */
 
 #include "Deta.h"
-
+#include "datapath.h"
 #include <fstream>
 
 Deta::Deta(std::string path, std::string databasename) {
 	this->path = path;
 	this->databasename = databasename;
 
-	std::string name = path + databasename;
+	std::string name = filepath + path + databasename;
 	int rc = sqlite3_open(name.c_str(), &db);
 
 	// if error
