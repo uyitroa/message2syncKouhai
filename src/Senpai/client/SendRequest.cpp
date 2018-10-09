@@ -1,40 +1,32 @@
-#include <utility>
-
 //
 // Created by yuitora . on 06/10/2018.
 //
 
 #include "SendRequest.h"
-#include <istream>
-#include <ostream>
-#include <string>
-#include <sstream>
+#include <curl/curl.h>
 //
-SendRequest::SendRequest(std::string host, std::string port) {
-	this->host = std::move(host);
-	this->port = std::move(port);
+SendRequest::SendRequest() = default;
+
+size_t SendRequest::WriteCallback(void *contents, size_t size, size_t nmemb, void *userp) {
+	((std::string*)userp)->append((char*)contents, size * nmemb);
+	return size * nmemb;
 }
+void SendRequest::sendpost(std::string data, std::string url) {
+	CURL *curl;
+	CURLcode res;
+	std::string readBuffer;
 
-void SendRequest::sendpost(std::string json, std::string host_name, std::string path) {
-	boost::asio::io_service io_service;
+	std::string full_url = url + data + "/";
+	curl = curl_easy_init();
+	if(curl) {
+		curl_easy_setopt(curl, CURLOPT_URL, full_url.c_str());
+		curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, WriteCallback);
+		curl_easy_setopt(curl, CURLOPT_WRITEDATA, &readBuffer);
+		res = curl_easy_perform(curl);
+		curl_easy_cleanup(curl);
 
-	tcp::resolver resolver(io_service);
-	tcp::resolver::query query(host, port);
-	tcp::resolver::iterator endpoint_iterator = resolver.resolve(query);
+		std::cout << readBuffer << std::endl;
+	}
 
-	tcp::socket socket_(io_service);
-	boost::asio::connect(socket_, endpoint_iterator);
-
-	boost::asio::streambuf request;
-	std::ostream request_stream(&request);
-
-	request_stream << "POST " << path << " HTTP/1.1 \r\n";
-	request_stream << "Host: " << host_name << "\r\n";
-	request_stream << "Content-Type: application/json; charset=utf-8\r\n";
-	request_stream << "Accept: application/json\r\n";
-	request_stream << "Content-Length: " << json.length() << "\r\n\r\n";
-	request_stream << json << "\n\n";
-
-	boost::asio::write(socket_, request);
 
 }

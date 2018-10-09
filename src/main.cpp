@@ -28,12 +28,12 @@ void controller() {
 void commander() {
 	SendRequest sendRequest;
 
-	std::string json = R"({"body" : "Hello World"})";
-	sendRequest.sendpost(json);
+	std::string data = "test";
+	sendRequest.sendpost(data);
 }
 
 void runserver() {
-	std::string command = "python3 " + filepath + "src/Kouhai/server/manage.py runserver &";
+	std::string command = "python3 " + filepath + "src/Kouhai/server/manage.py runserver 0.0.0.0:8000 &";
 	system(command.c_str());
 }
 

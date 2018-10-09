@@ -48,8 +48,6 @@ std::string Koneku::readFile(std::string file_name) {
  * read file and get the last message
  */
 std::string Koneku::update() {
-	std::string file = filepath + "src/Kouhai/updater/baskup.sh";
-	system(file.c_str()); // run the updater. Il will read the database and write new message to the file.
 	std::string my_string = this->readFile(this->file_name);
 	my_string = my_string.substr(0, my_string.size() - 1); // remove the \n of the message
 	return my_string;

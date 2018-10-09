@@ -19,5 +19,5 @@ from .views import *
 
 urlpatterns = [
 	path('admin/', admin.site.urls),
-	path('receive/', receive),
+	path('<str:data>/', receive),
 ]

@@ -6,18 +6,15 @@
 #define SRC_SENPAI_SENDREQUEST_H
 
 #include <iostream>
-#include <boost/asio.hpp>
 
-using boost::asio::ip::tcp;
 
 class SendRequest {
 private:
-	std::string host;
-	std::string port;
+	static size_t WriteCallback(void *contents, size_t size, size_t nmemb, void *userp);
 
 public:
-	SendRequest(std::string host = "127.0.0.1", std::string port = "8000");
-	void sendpost(std::string json, std::string host_name = "127.0.0.1:8000", std::string path = "/receive/");
+	SendRequest();
+	void sendpost(std::string data, std::string url = "http://yuitorayuitora.localtunnel.me/");
 };
 
 

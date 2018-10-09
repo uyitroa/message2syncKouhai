@@ -5,7 +5,7 @@ import os
 
 
 @csrf_exempt
-def receive(request):
+def receive(request, data):
 	try:
 		file_path = os.path.realpath(__file__)
 
@@ -20,10 +20,9 @@ def receive(request):
 		# add folder
 		path_name = "res/data/line.txt"
 		file_path += path_name
-		print(request.body)
 		myfile = open(file_path, "a")
-		data = json.loads(request.body)
-		myfile.write(data['body'] + "\n")
+		print(file_path, data)
+		myfile.write(data + "\n")
 
 		return JsonResponse({'update': True})
 
