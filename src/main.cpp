@@ -2,9 +2,14 @@
 #include <fstream>
 
 
-#include "Kouhai/core/Koneku.h"
-#include "Kouhai/database/Deta.h"
-#include "Kouhai/database/datapath.h"
+#include "core/Koneku.h"
+#include "database/Deta.h"
+#include "database/datapath.h"
+
+void runserver() {
+ 	std::string command = "python3 " + filepath + "src/server/manage.py runserver &";
+ 	system(command.c_str());
+ }
 
 void controller(char choice) {
 	if(choice == '1') {
