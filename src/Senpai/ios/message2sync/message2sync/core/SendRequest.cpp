@@ -3,7 +3,7 @@
 //
 
 #include "SendRequest.h"
-#include <curl/curl.h>
+#include <../../libs/curl/curl.h>
 //
 SendRequest::SendRequest() = default;
 
