@@ -1,1 +1,1 @@
-0|sc discordq|
+1|bash open -a discord|

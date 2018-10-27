@@ -1,31 +1,32 @@
 from django.views.decorators.csrf import csrf_exempt
-from django.http import JsonResponse
-import json
-import os
+from django.http import HttpResponse
+from serverMessage2sync import data
+
+
+def writeInput(inputdata):
+	# add folder
+	path_name = "res/data/line.txt"
+	input_path = data.file_path + path_name
+	myfile = open(input_path, "w")
+	myfile.write(inputdata + "\n")
+
+
+def getOutput():
+	output = ""
+	path_name = "res/output/line.txt"
+	output_path = data.file_path + path_name
+	file = open(output_path, "r")
+	while output == data.before:
+		output = file.read()
+	data.before = output
+	return output
 
 
 @csrf_exempt
-def receive(request, data):
+def receive(request, inputdata):
 	try:
-		file_path = os.path.realpath(__file__)
-
-		# remove file name
-		file_name = "views.py"
-		file_path = file_path[0:len(file_path) - len(file_name)]
-
-		# remove folder name
-		folder_name = "src/server/serverMessage2sync/"
-		file_path = file_path[0:len(file_path) - len(folder_name)]
-
-		# add folder
-		path_name = "res/data/line.txt"
-		file_path += path_name
-		myfile = open(file_path, "w")
-		print(file_path, data)
-		myfile.write(data + "\n")
-
-		return JsonResponse({'update': True})
-
+		writeInput(inputdata)
+		return HttpResponse(getOutput())
 	except Exception as e:
 		print(e)
-		return JsonResponse({'update': False})
+		return HttpResponse("Error: " + e)

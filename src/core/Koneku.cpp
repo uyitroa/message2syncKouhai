@@ -49,7 +49,7 @@ std::string Koneku::update() {
 
 // check if it is the user messages or its own message
 bool Koneku::filterMsg(std::string& my_string) {
-	if(my_string.substr(0, 5) == "You: ") { // 0| means controller message, and 1| means its own message
+	if(my_string.substr(0, 5) == "You: ") { // You: means controller message, else means its own message
 		my_string = my_string.substr(5, my_string.size() - 5); // remove those symbol since we know that's the controller message
 		return true;
 
