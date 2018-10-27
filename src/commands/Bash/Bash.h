@@ -17,9 +17,10 @@ private:
 
 public:
 	Bash();
-	virtual ~Bash();
 
-	virtual void run(std::string &my_string) override final;
+	~Bash() override;
+
+	std::string run(std::string &my_string) final;
 };
 
 #endif /* SRC_COMMANDS_BASH_H_ */

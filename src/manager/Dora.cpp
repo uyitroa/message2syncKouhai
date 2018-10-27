@@ -26,13 +26,13 @@ Dora::~Dora() {
 }
 
 
-void Dora::runCommand(std::string &my_string) {
+std::string Dora::runCommand(std::string &my_string) {
 	int index = findCommand(my_string);
 
 
 	if(index != -1) {
 		try {
-			this->command->at(index)->run(my_string);
+			return this->command->at(index)->run(my_string);
 		} catch (std::exception &e) {
 			std::string error = e.what();
 			std::cout << error << "\n";

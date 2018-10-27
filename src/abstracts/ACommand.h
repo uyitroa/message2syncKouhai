@@ -28,7 +28,7 @@ public:
 	 * It will be called when the controller need the command
 	 * The whole input will be passed by reference parameter
 	 */
-	virtual void run(std::string &my_string) = 0;
+	virtual std::string run(std::string &my_string) = 0;
 
 	virtual std::string& getPrefix();
 

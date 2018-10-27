@@ -14,7 +14,7 @@ public:
 	Dora();
 
 	virtual ~Dora();
-	void runCommand(std::string &my_string);
+	std::string runCommand(std::string &my_string);
 	
 	// select the right input
 	int findCommand(std::string &my_string);

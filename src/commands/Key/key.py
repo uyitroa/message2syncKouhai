@@ -6,6 +6,8 @@ try:
 	import pyautogui
 except:
 	os.system("pip install pyautogui")
+	os.system("pip install pyobjc")
+	os.system("pip install pyobjc-core")
 	import pyautogui
 
 def main():

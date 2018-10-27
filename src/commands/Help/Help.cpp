@@ -21,7 +21,7 @@ int Help::search(std::string &prefix) {
 	return -1;
 }
 
-void Help::run(std::string &my_string) {
+std::string Help::run(std::string &my_string) {
 	removePrefix(my_string);
 	std::string output;
 	if (my_string.empty()) {
@@ -35,8 +35,5 @@ void Help::run(std::string &my_string) {
 		else
 			output = "no such command \n";
 	}
-	std::cout << output << "\n";
-	output = "send \"" + output + "\" to $0762226688";
-	Send send;
-	send.run(output);
+	return output;
 }

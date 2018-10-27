@@ -12,10 +12,11 @@
 class SharePic : public ACommand {
 public:
 	SharePic();
-	~SharePic();
+	~SharePic() override;
 
 	std::string exec(const char *cmd);
-	virtual void run(std::string &my_string) override final;
+
+	std::string run(std::string &my_string) final;
 };
 
 #endif /* SRC_COMMANDS_SHAREPIC_SHAREPIC_H_ */

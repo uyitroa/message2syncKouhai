@@ -7,8 +7,8 @@
 #include "database/datapath.h"
 
 void runserver() {
- 	std::string command = "python3 " + filepath + "src/server/manage.py runserver &";
- 	system(command.c_str());
+	std::string command = "python3 " + filepath + "src/server/manage.py runserver &";
+	system(command.c_str());
  }
 
 void controller(char choice) {

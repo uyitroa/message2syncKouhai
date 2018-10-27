@@ -15,7 +15,7 @@ public:
 	Key();
 	~Key();
 
-	virtual void run(std::string &my_string) override final;
+	std::string run(std::string &my_string) final;
 };
 
 #endif /* SRC_COMMANDS_KEY_KEY_H_ */

@@ -18,9 +18,10 @@ private:
 
 public:
 	Shortcut();
-	virtual ~Shortcut();
 
-	virtual void run(std::string &my_string) override final;
+	~Shortcut() override;
+
+	std::string run(std::string &my_string) final;
 };
 
 #endif /* SRC_COMMANDS_SHAREPIC_SHORTCUT_H_ */

@@ -31,17 +31,12 @@ std::string Bash::exec(const char* cmd) {
 	return result;
 }
 
-void Bash::run(std::string &my_string) {
+std::string Bash::run(std::string &my_string) {
 	removePrefix(my_string);
 
 	std::string result = exec(my_string.c_str());
-	Send send;
-	if(result == "") {
-		std::string command = "send \"done\" to $0762226688";
-		send.run(command);
-	} else {
-		std::string command = "send \"" + result + "\" to $0762226688";
-		std::cout << "COMMAND: " << command << "\n\n\n\n";
-		send.run(command);
-	}
+	if(result == "")
+		return "done";
+	else
+		return result;
 }

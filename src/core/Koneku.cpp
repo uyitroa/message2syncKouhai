@@ -8,6 +8,8 @@
 #include <fstream>
 #include <unistd.h>
 #include <vector>
+#include <chrono>
+#include <ctime>
 
 #include "Koneku.h"
 #include "../manager/Dora.h"
@@ -47,13 +49,25 @@ std::string Koneku::update() {
 
 // check if it is the user messages or its own message
 bool Koneku::filterMsg(std::string& my_string) {
-	if(my_string.substr(0, 2) == "1|") { // 0| means controller message, and 1| means its own message
-		my_string = my_string.substr(2, my_string.size() - 2); // remove those symbol since we know that's the controller message
+	if(my_string.substr(0, 5) == "You: ") { // 0| means controller message, and 1| means its own message
+		my_string = my_string.substr(5, my_string.size() - 5); // remove those symbol since we know that's the controller message
 		return true;
 
 	} else {
 		return false;
 	}
+}
+
+void sendResult(std::string &result) {
+	std::ofstream file;
+	file.open(filepath + "res/output/line.txt");
+
+	std::time_t time;
+	time = std::chrono::system_clock::to_time_t(std::chrono::system_clock::now());
+
+	file << time << "|" << result;
+	file.close();
+
 }
 
 // main method
@@ -63,14 +77,16 @@ void Koneku::launch() {
 
 	std::cout << "Setup finished" << "\n";
 
-	while(current_string != this->EXIT_COMMAND) { // check if the order is not the exit
+	while (current_string != this->EXIT_COMMAND) { // check if the order is not the exit
 		std::string new_string = this->update();
 
-		if(!(new_string == current_string)) {
+		if (new_string != current_string) {
 			std::cout << new_string << "\n";
 			current_string = new_string;
-			if(this->filterMsg(new_string))
-				dora.runCommand(new_string);
+			if (this->filterMsg(new_string)) {
+				std::string result = dora.runCommand(new_string);
+				sendResult(result);
+			}
 		}
 
 		sleep(this->wait);

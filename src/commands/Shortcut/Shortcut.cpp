@@ -57,7 +57,7 @@ void Shortcut::deleteSc(std::string alias, Deta &deta) {
 }
 
 
-void Shortcut::run(std::string& my_string) {
+std::string Shortcut::run(std::string& my_string) {
 	removePrefix(my_string);
 
 	Deta deta;
@@ -71,18 +71,15 @@ void Shortcut::run(std::string& my_string) {
 
 		this->create(my_string, deta);
 
-		Send send;
-		std::string command = "send \"done\" to $0762226688";
-		send.run(command);
+		return "done";
 
 	} else if(my_string.substr(0, 8) == "delete()"){
 		my_string = "alias = '" + my_string.substr(9, my_string.size()) + "'";
 		this->deleteSc(my_string, deta);
 
-		Send send;
-		std::string command = "send \"done\" to $0762226688";
-		send.run(command);
+		return "done";
 	} else {
 		this->connectToManager(my_string, deta);
+		return "";
 	}
 }

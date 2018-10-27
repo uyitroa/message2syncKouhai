@@ -16,7 +16,7 @@ public:
 	Help();
 	~Help();
 
-	virtual void run(std::string &my_string) override final;
+	std::string run(std::string &my_string) final;
 
 };
 
