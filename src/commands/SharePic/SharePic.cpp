@@ -7,7 +7,6 @@
 
 #include "SharePic.h"
 
-#include "../Send/Send.h"
 SharePic::SharePic()
 	: ACommand("sharepic") {
 	// TODO Auto-generated constructor stub

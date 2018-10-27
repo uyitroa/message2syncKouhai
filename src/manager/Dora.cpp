@@ -36,8 +36,10 @@ std::string Dora::runCommand(std::string &my_string) {
 		} catch (std::exception &e) {
 			std::string error = e.what();
 			std::cout << error << "\n";
+			return "Error: " + error;
 		}
 	}
+	return "No such a command";
 }
 
 int Dora::findCommand(std::string &my_string) {

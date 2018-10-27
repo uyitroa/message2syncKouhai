@@ -3,7 +3,6 @@
 //
 
 #include "Help.h"
-#include "../Send/Send.h"
 #include "../../database/classdata.h"
 
 Help::Help() : ACommand("helpmepls") {

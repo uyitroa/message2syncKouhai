@@ -8,7 +8,6 @@
 #include "Shortcut.h"
 #include <fstream>
 
-#include "../Send/Send.h"
 
 Shortcut::Shortcut()
 	: ACommand("sc","To create:  sc alias:`real command`->`shortcut`\nTo delete:  sc delete() `shortcut`") {

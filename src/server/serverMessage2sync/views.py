@@ -4,7 +4,6 @@ from serverMessage2sync import data
 
 
 def writeInput(inputdata):
-	# add folder
 	path_name = "res/data/line.txt"
 	input_path = data.file_path + path_name
 	myfile = open(input_path, "w")
@@ -16,10 +15,12 @@ def getOutput():
 	path_name = "res/output/line.txt"
 	output_path = data.file_path + path_name
 	file = open(output_path, "r")
+
 	while output == data.before:
 		output = file.read()
+
 	data.before = output
-	return output
+	return output.split("|")[1]
 
 
 @csrf_exempt

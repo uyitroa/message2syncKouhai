@@ -6,7 +6,6 @@
  */
 
 #include "Key.h"
-#include "../Send/Send.h"
 #include <fstream>
 
 Key::Key()

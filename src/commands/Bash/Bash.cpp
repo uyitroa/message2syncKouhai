@@ -6,7 +6,6 @@
  */
 
 #include "Bash.h"
-#include "../Send/Send.h"
 
 Bash::Bash()
 	: ACommand("bash") {
