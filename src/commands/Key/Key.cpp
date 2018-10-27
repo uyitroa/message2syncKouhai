@@ -16,7 +16,7 @@ Key::~Key() {}
 std::string Key::run(std::string& my_string) {
 	removePrefix(my_string);
 
-	std::string cmd = "python " + filepath + "src/commands/Key/key.py '" + my_string + "'";
+	std::string cmd = "python " + filepath + "src/commands/Key/key.py \"" + my_string + "\"";
 	std::cout << cmd << "\n";
 	system(cmd.c_str());
 	return "done";

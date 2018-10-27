@@ -15,7 +15,7 @@ class Koneku {
 private:
 	const std::string EXIT_COMMAND = "1|exit()|";
 	std::string file_name;
-	unsigned int  wait;
+	unsigned int wait;
 
 	/*
 	 * readFile, the file store the conversation of the controller and the computer
@@ -37,6 +37,12 @@ public:
 	 * 1| reprensent computer, and 0| represent the controller
 	 */
 	bool filterMsg(std::string &my_string);
+
+	/*
+	 * write the result of the command to a file so the server
+	 * could retrieve it and send to controller
+	 */
+	void sendResult(std::string &result);
 
 	void launch();
 

@@ -8,7 +8,6 @@
 #include <fstream>
 #include <unistd.h>
 #include <vector>
-#include <chrono>
 #include <ctime>
 
 #include "Koneku.h"
@@ -58,14 +57,11 @@ bool Koneku::filterMsg(std::string& my_string) {
 	}
 }
 
-void sendResult(std::string &result) {
+void Koneku::sendResult(std::string &result) {
 	std::ofstream file;
 	file.open(filepath + "res/output/line.txt");
 
-	std::time_t time;
-	time = std::chrono::system_clock::to_time_t(std::chrono::system_clock::now());
-
-	file << time << "|" << result;
+	file << result;
 	file.close();
 
 }

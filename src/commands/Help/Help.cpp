@@ -8,9 +8,7 @@
 Help::Help() : ACommand("helpmepls") {
 }
 
-Help::~Help() {
-
-}
+Help::~Help() = default;
 
 int Help::search(std::string &prefix) {
 	for (int index = 0; index < command_list.size(); index++) {
@@ -21,13 +19,13 @@ int Help::search(std::string &prefix) {
 }
 
 std::string Help::run(std::string &my_string) {
-	removePrefix(my_string);
 	std::string output;
-	if (my_string.empty()) {
+	if (my_string == prefix) {
 		for (auto &element : command_list) {
 			output += element->help() + "\n";
 		}
 	} else {
+		removePrefix(my_string);
 		int index = search(output);
 		if (index != -1)
 			output = command_list[index]->help() + "\n";
