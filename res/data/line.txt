@@ -1,1 +1,1 @@
-You: helpmepls
+You: bash open -a terminal

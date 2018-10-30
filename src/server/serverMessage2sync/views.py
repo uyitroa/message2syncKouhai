@@ -51,3 +51,10 @@ def receive(request, inputdata):
 	except Exception as e:
 		print(e)
 		return HttpResponse("Error: " + str(e))
+
+@csrf_exempt
+def renderImage(request, sub):
+	path_name = "res/images/toupload/" + sub
+	image_data = open(data.file_path + path_name).read()
+	return HttpResponse(image_data, content_type = "image/png")
+

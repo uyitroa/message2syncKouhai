@@ -17,5 +17,6 @@ from django.urls import path
 from .views import *
 
 urlpatterns = [
-	path('<str:inputdata>/', receive),
+	path('command/<str:inputdata>/', receive),
+	path('upload/<str:sub>/', renderImage),
 ]
