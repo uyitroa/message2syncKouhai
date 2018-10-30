@@ -6,6 +6,7 @@
  */
 
 #include "SharePic.h"
+#include <fstream>
 
 SharePic::SharePic()
 	: ACommand("sharepic") {
@@ -17,25 +18,10 @@ SharePic::~SharePic() {
 	// TODO Auto-generated destructor stub
 }
 
-std::string SharePic::exec(const char *cmd) {
-	FILE* pipe = popen(cmd, "r");
-	if (!pipe)
-		return "ERROR";
-	char buffer[256];
-	std::string result = "";
-	while(!feof(pipe)) {
-		if(fgets(buffer, 256, pipe) != NULL) {
-			result += buffer;
-		}
-	}
-	pclose(pipe);
-	return result;
-}
-
 std::string SharePic::run(std::string& my_string) {
 	removePrefix(my_string);
 
-	std::string command = "." + filepath + "/src/commands/SharePic/imgur.sh " + my_string;
-	std::string result = exec(command.c_str());
+	std::string command = "mv " + my_string + " " + filepath + "res/images/toupload/sharepic.png";
+	os.system(command.c_str());
 	return result;
 }
