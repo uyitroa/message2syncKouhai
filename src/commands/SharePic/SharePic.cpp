@@ -23,5 +23,5 @@ std::string SharePic::run(std::string& my_string) {
 
 	std::string command = "cp " + my_string + " " + filepath + "res/images/toupload/sharepic.png";
 	os.system(command.c_str());
-	return result;
+	return serveraddress + "sharepic.png";
 }
