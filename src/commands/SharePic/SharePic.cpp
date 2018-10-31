@@ -22,6 +22,6 @@ std::string SharePic::run(std::string& my_string) {
 	removePrefix(my_string);
 
 	std::string command = "cp " + my_string + " " + filepath + "res/images/toupload/sharepic.png";
-	os.system(command.c_str());
-	return serveraddress + "sharepic.png";
+	system(command.c_str());
+	return serveraddress + "upload/sharepic.png";
 }

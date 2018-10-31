@@ -45,6 +45,7 @@ def receive(request, inputdata):
 	:type inputdata: string
 	"""
 	try:
+		inputdata = inputdata.replace("*_*_", "/")
 		writeInput(inputdata)
 		runProgram(inputdata)
 		return HttpResponse(getOutput())
@@ -55,6 +56,6 @@ def receive(request, inputdata):
 @csrf_exempt
 def renderImage(request, sub):
 	path_name = "res/images/toupload/" + sub
-	image_data = open(data.file_path + path_name).read()
+	image_data = open(data.file_path + path_name, "rb").read()
 	return HttpResponse(image_data, content_type = "image/png")
 
