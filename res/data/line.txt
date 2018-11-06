@@ -1,1 +1,1 @@
-You: key hotkey('command', 'shift', '3')
+You: sharepic ~/test.png

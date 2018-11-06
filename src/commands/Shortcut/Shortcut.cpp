@@ -55,11 +55,27 @@ void Shortcut::deleteSc(std::string alias, Deta &deta) {
 	deta.remove("shortcuts" ,alias);
 }
 
+std::string helpShortcut(Deta &deta) {
+	sqlite3_stmt *stmt = deta.readAll("shortcuts");
+	std::string result;
+	while (sqlite3_step(stmt) != SQLITE_DONE) {
+		result += std::string((char*) sqlite3_column_text(stmt, 0));
+		result += "|" + std::string((char*) sqlite3_column_text(stmt, 1));
+	}
+	return result;
+
+}
+
 
 std::string Shortcut::run(std::string& my_string) {
 	removePrefix(my_string);
 
 	Deta deta;
+	if (my_string == "help") {
+		std::string result = helpShortcut(deta);
+		return result;
+	}
+
 	if(!deta.tableExist("shortcuts")) {
 		std::cout << "Creating table" << "\n";
 		deta.createTable("shortcuts", "alias VARCHAR(100) UNIQUE, real_command VARCHAR(100)");
@@ -75,8 +91,8 @@ std::string Shortcut::run(std::string& my_string) {
 	} else if(my_string.substr(0, 8) == "delete()"){
 		my_string = "alias = '" + my_string.substr(9, my_string.size()) + "'";
 		this->deleteSc(my_string, deta);
-
 		return "done";
+
 	} else {
 		this->connectToManager(my_string, deta);
 		return "";
