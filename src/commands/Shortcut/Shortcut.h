@@ -13,8 +13,10 @@
 class Shortcut: public ACommand {
 private:
 	void create(std::string input, Deta &deta);
-	void connectToManager(std::string &input, Deta &deta);
+	std::string connectToManager(std::string &input, Deta &deta);
 	void deleteSc(std::string alias, Deta &deta);
+	std::string runCommand(std::string &command);
+	int findCommand(std::string &my_string);
 
 public:
 	Shortcut();

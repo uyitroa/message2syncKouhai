@@ -11,6 +11,8 @@
 #include "../../abstracts/ACommand.h"
 
 class Key : public ACommand {
+private:
+	std::string help_string;
 public:
 	Key();
 	~Key();

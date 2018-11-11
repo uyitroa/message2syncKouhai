@@ -6,6 +6,7 @@
  */
 
 #include "Shortcut.h"
+#include "../../database/classdata.h"
 #include <fstream>
 
 
@@ -19,6 +20,34 @@ Shortcut::~Shortcut() {
 	// TODO Auto-generated destructor stub
 }
 
+std::string Shortcut::runCommand(std::string &my_string) {
+	int index = findCommand(my_string);
+
+
+	if(index != -1) {
+		try {
+			return command_list.at(index)->run(my_string);
+		} catch (std::exception &e) {
+			std::string error = e.what();
+			std::cout << error << "\n";
+			return "Error: " + error;
+		}
+	}
+	return "No such a command";
+}
+
+int Shortcut::findCommand(std::string &my_string) {
+	for(int count = 0; count < command_list.size(); count++) {
+		std::string prefix = command_list.at(count)->getPrefix(); // get prefix of each command
+		std::string sub = my_string.substr(0, prefix.size()); // get prefix of the input
+
+		// check if the prefix correspond to the command
+		if(prefix == sub)
+			return count;
+	}
+	return -1;
+}
+
 void Shortcut::create(std::string input, Deta &deta) {
 	std::string real;
 	std::string alias;
@@ -30,25 +59,21 @@ void Shortcut::create(std::string input, Deta &deta) {
 	}
 
 	try {
-		deta.insert("shortcuts", "alias, real_command", "'" + alias + "', '" + real +"'");
+		deta.insert("shortcuts", "alias, real_command", "\"" + alias + "\", \"" + real +"\"");
 	} catch (std::exception &e) {
-		deta.update("shortcuts", "alias = '" + alias + "'", "real_command = '" + real + "'");
+		deta.update("shortcuts", "alias = \"" + alias + "\"", "real_command = \"" + real + "\"");
 	}
 }
 
-void Shortcut::connectToManager(std::string &input, Deta &deta) {
-	sqlite3_stmt *stmt = deta.read("shortcuts", "alias = '" + input + "'");
-	sqlite3_step(stmt);
-	std::string real = std::string((char*) sqlite3_column_text(stmt, 1));
+std::string Shortcut::connectToManager(std::string &input, Deta &deta) {
+	sqlite3_stmt *stmt = deta.read("shortcuts", "alias = \"" + input + "\"");
+	if (sqlite3_step(stmt) != SQLITE_DONE) {
+		std::string real = std::string((char *) sqlite3_column_text(stmt, 1));
+		sqlite3_finalize(stmt);
+		return runCommand(real);
+	}
 	sqlite3_finalize(stmt);
-
-	real = "1|" + real;
-	std::string path = filepath + "res/data/line.txt";
-
-	std::ofstream myfile;
-	myfile.open(path);
-	myfile << real << "\n";
-	myfile.close();
+	return "No such shortcut";
 }
 
 void Shortcut::deleteSc(std::string alias, Deta &deta) {
@@ -59,8 +84,9 @@ std::string helpShortcut(Deta &deta) {
 	sqlite3_stmt *stmt = deta.readAll("shortcuts");
 	std::string result;
 	while (sqlite3_step(stmt) != SQLITE_DONE) {
+		result += "\n";
 		result += std::string((char*) sqlite3_column_text(stmt, 0));
-		result += "|" + std::string((char*) sqlite3_column_text(stmt, 1));
+		result += "  |   " + std::string((char*) sqlite3_column_text(stmt, 1));
 	}
 	return result;
 
@@ -94,7 +120,6 @@ std::string Shortcut::run(std::string& my_string) {
 		return "done";
 
 	} else {
-		this->connectToManager(my_string, deta);
-		return "";
+		return this->connectToManager(my_string, deta);
 	}
 }
